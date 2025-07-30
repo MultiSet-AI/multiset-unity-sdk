@@ -2,7 +2,7 @@
     "name": "MultiSet-SDK.Editor",
     "rootNamespace": "MultiSet",
     "references": [
-        "MultiSet-SDK"
+        "MultiSet-SDK.Core"
     ],
     "includePlatforms": [
         "Editor"
