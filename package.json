@@ -1,0 +1,26 @@
+{
+  "name": "com.multiset.sdk",
+  "version": "1.8.0",
+  "displayName": "MultiSet-SDK",
+  "description": "The MultiSet developer documentation is your essential resource for creating and integrating MultiSet features into your application.",
+  "unity": "6000.0",
+  "unityRelease": "36f1",
+  "author": {
+    "name": "MultiSet",
+    "email": "nikhil@multiset.ai",
+    "url": "https://www.multiset.ai/"
+  },
+  "dependencies": {
+     "com.unity.cloud.draco": "5.1.7",
+     "com.unity.cloud.gltfast": "6.8.0",
+     "com.unity.xr.arfoundation": "6.0.3",
+     "com.unity.ai.navigation": "2.0.5"
+  },
+  "samples": [
+    {
+      "displayName": "Sample Scenes",
+      "description": "Import Localization, Navigation, Training and ModelSetTracking Scenes from MultiSet-Unity-SDK",
+      "path": "Samples~/Scenes"
+    }
+  ]
+}

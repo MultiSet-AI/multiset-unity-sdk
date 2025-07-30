@@ -1,0 +1,20 @@
+{
+    "name": "MultiSet-SDK.Core",
+    "rootNamespace": "MultiSet",
+    "references": [
+        "Unity.TextMeshPro",
+        "Draco",
+        "glTFast",
+        "Unity.InputSystem",
+        "Unity.XR.ARFoundation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
