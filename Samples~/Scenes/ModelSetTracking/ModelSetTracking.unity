@@ -1862,21 +1862,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1760587817728407847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7890701388401162444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -650815242, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clientId: 3f725028-e172-4c55-9329-95c1d1b0a882
-  clientSecret: 9760860d75fbb35b8685b187f7d7de7d1fd8fd176f660dd8d48dedf6e6515916
-  runtimeAuthentication: 0
 --- !u!114 &1890651496331697199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2530,7 +2515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3716272801694757098}
-  - component: {fileID: 1760587817728407847}
+  - component: {fileID: 7890701388401162445}
   - component: {fileID: 7672203389283212929}
   - component: {fileID: 7672203389283212930}
   m_Layer: 0
@@ -2540,6 +2525,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7890701388401162445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7890701388401162444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -650815242, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientId: 
+  clientSecret: 
+  runtimeAuthentication: 0
 --- !u!224 &7925265499100051068
 RectTransform:
   m_ObjectHideFlags: 0
