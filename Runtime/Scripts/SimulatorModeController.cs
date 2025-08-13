@@ -6,6 +6,7 @@ Redistribution in source or binary forms must retain this notice.
 */
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 
 namespace MultiSet
@@ -16,17 +17,17 @@ namespace MultiSet
         private bool simulatorMode = false;
         public float walkingSpeed = 4f;
         public float turningSpeed = 3f;
+        public float mouseSensitivity = 2f;
 
-        [Header("Key Bindings")]
-        public KeyCode moveForwardKey = KeyCode.W;
-        public KeyCode moveBackwardKey = KeyCode.S;
-        public KeyCode moveRightKey = KeyCode.D;
-        public KeyCode moveLeftKey = KeyCode.A;
-        public KeyCode moveUpwardKey = KeyCode.E;
-        public KeyCode moveDownwardKey = KeyCode.Q;
-        public KeyCode sprintKey = KeyCode.LeftShift;
+        [Header("Input Actions")]
+        public InputAction moveAction;
+        public InputAction lookAction;
+        public InputAction sprintAction;
+        public InputAction verticalMoveAction;
 
         private GameObject simulatorCamera;
+        private Vector2 currentLookInput;
+        private bool isRightMousePressed = false;
 
         private void Awake()
         {
@@ -40,6 +41,41 @@ namespace MultiSet
             // Default behavior for other platforms
             simulatorMode = false;
 #endif
+
+            // Initialize input actions if in simulator mode
+            if (simulatorMode)
+            {
+                SetupInputActions();
+            }
+        }
+
+        private void SetupInputActions()
+        {
+            // Movement (WASD)
+            moveAction = new InputAction("Move", InputActionType.Value, "<Keyboard>/w");
+            moveAction.AddCompositeBinding("2DVector")
+                .With("Up", "<Keyboard>/w")
+                .With("Down", "<Keyboard>/s")
+                .With("Left", "<Keyboard>/a")
+                .With("Right", "<Keyboard>/d");
+
+            // Vertical movement (Q/E)
+            verticalMoveAction = new InputAction("VerticalMove", InputActionType.Value);
+            verticalMoveAction.AddCompositeBinding("1DAxis")
+                .With("Positive", "<Keyboard>/e")
+                .With("Negative", "<Keyboard>/q");
+
+            // Mouse look
+            lookAction = new InputAction("Look", InputActionType.Value, "<Mouse>/delta");
+
+            // Sprint
+            sprintAction = new InputAction("Sprint", InputActionType.Button, "<Keyboard>/leftShift");
+
+            // Mouse button for camera rotation
+            var rightMouseAction = new InputAction("RightMouse", InputActionType.Button, "<Mouse>/rightButton");
+            rightMouseAction.performed += ctx => isRightMousePressed = true;
+            rightMouseAction.canceled += ctx => isRightMousePressed = false;
+            rightMouseAction.Enable();
         }
 
         private void Start()
@@ -55,11 +91,34 @@ namespace MultiSet
             }
         }
 
+        private void OnEnable()
+        {
+            if (simulatorMode)
+            {
+                moveAction?.Enable();
+                lookAction?.Enable();
+                sprintAction?.Enable();
+                verticalMoveAction?.Enable();
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (simulatorMode)
+            {
+                moveAction?.Disable();
+                lookAction?.Disable();
+                sprintAction?.Disable();
+                verticalMoveAction?.Disable();
+            }
+        }
+
         private void Update()
         {
             if (simulatorMode)
             {
                 HandleMovement();
+                HandleRotation();
             }
         }
 
@@ -68,50 +127,42 @@ namespace MultiSet
             float currentSpeed = walkingSpeed;
 
             // Sprint logic
-            if (Input.GetKey(sprintKey))
+            if (sprintAction.IsPressed())
             {
                 currentSpeed *= 1.5f; // Increase speed by 50% while sprinting
             }
 
-            // Forward and backward movement
-            if (Input.GetKey(moveForwardKey))
-            {
-                transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
-            }
-            if (Input.GetKey(moveBackwardKey))
-            {
-                transform.Translate(Vector3.back * currentSpeed * Time.deltaTime);
-            }
+            // Get movement input
+            Vector2 moveInput = moveAction.ReadValue<Vector2>();
+            float verticalInput = verticalMoveAction.ReadValue<float>();
 
-            // Right and left movement
-            if (Input.GetKey(moveRightKey))
-            {
-                transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
-            }
-            if (Input.GetKey(moveLeftKey))
-            {
-                transform.Translate(Vector3.left * currentSpeed * Time.deltaTime);
-            }
+            // Apply movement
+            Vector3 movement = new Vector3(moveInput.x, verticalInput, moveInput.y) * currentSpeed * Time.deltaTime;
+            transform.Translate(movement);
+        }
 
-            // Upward and downward movement
-            if (Input.GetKey(moveUpwardKey))
+        private void HandleRotation()
+        {
+            // Only rotate when right mouse button is held
+            if (isRightMousePressed)
             {
-                transform.Translate(Vector3.up * currentSpeed * Time.deltaTime);
-            }
-            if (Input.GetKey(moveDownwardKey))
-            {
-                transform.Translate(Vector3.down * currentSpeed * Time.deltaTime);
-            }
-
-            // Rotate the camera based on mouse movement
-            if (Input.GetMouseButton(1))
-            {
-                float horizontal = Input.GetAxis("Mouse X") * turningSpeed;
-                float vertical = -Input.GetAxis("Mouse Y") * turningSpeed;
+                Vector2 lookInput = lookAction.ReadValue<Vector2>();
+                
+                float horizontal = lookInput.x * mouseSensitivity * turningSpeed * Time.deltaTime;
+                float vertical = -lookInput.y * mouseSensitivity * turningSpeed * Time.deltaTime;
 
                 transform.Rotate(0, horizontal, 0, Space.World);
                 transform.Rotate(vertical, 0, 0, Space.Self);
             }
+        }
+
+        private void OnDestroy()
+        {
+            // Clean up input actions
+            moveAction?.Dispose();
+            lookAction?.Dispose();
+            sprintAction?.Dispose();
+            verticalMoveAction?.Dispose();
         }
     }
 }

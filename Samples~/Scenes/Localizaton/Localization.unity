@@ -1344,13 +1344,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 4
   turningSpeed: 3
-  moveForwardKey: 119
-  moveBackwardKey: 115
-  moveRightKey: 100
-  moveLeftKey: 97
-  moveUpwardKey: 101
-  moveDownwardKey: 113
-  sprintKey: 304
+  mouseSensitivity: 2
+  moveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fa9ec272-2ccd-4a11-878c-a01b77258665
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lookAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 02a0e448-5f1e-4ea8-bfd2-be5774a7059d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  sprintAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4b99ccaa-d402-4896-bdc7-4db613400f27
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  verticalMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 43e0332f-d7c5-49d6-9261-aed48ff06f1c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1001 &1524886770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2115,6 +2145,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
+      propertyPath: enableBlurCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: mapOrMapsetCode
       value: 
       objectReference: {fileID: 0}
@@ -2132,7 +2166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: LocalizationSuccess.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: LocalizationRequested.m_PersistentCalls.m_Calls.Array.size

@@ -3686,7 +3686,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 69a1ec5c9b52d400ca81aaaefb440e76, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 721de5821262b5d48ba637f2a1b5ac07, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &1212057513
 MonoBehaviour:
@@ -9326,6 +9326,10 @@ PrefabInstance:
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: relocalization
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
+      propertyPath: enableBlurCheck
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: mapOrMapsetCode

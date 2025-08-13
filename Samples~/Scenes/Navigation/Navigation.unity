@@ -1966,7 +1966,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 273398eb4223d48b4b6b8bd0b8d4beb4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f14fdc3177a3f4ac3bca600006d76892, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &1212057513
 MonoBehaviour:
@@ -2490,13 +2490,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 4
   turningSpeed: 3
-  moveForwardKey: 119
-  moveBackwardKey: 115
-  moveRightKey: 100
-  moveLeftKey: 97
-  moveUpwardKey: 101
-  moveDownwardKey: 113
-  sprintKey: 304
+  mouseSensitivity: 2
+  moveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 932e35b8-011e-49f4-a191-3676dcf8dd11
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lookAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fcf58665-8cc1-4a91-95af-a46ae64f48f0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  sprintAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0f8ceb09-6392-4bc7-a205-9bfcb1caeb79
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  verticalMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 61b8c821-95e9-41d6-be57-c21373bfdf4a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!135 &1505451506
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6310,6 +6340,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
+      propertyPath: enableBlurCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: mapOrMapsetCode
       value: 
       objectReference: {fileID: 0}
@@ -6331,7 +6365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: LocalizationSuccess.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: LocalizationRequested.m_PersistentCalls.m_Calls.Array.size

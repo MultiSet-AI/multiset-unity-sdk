@@ -1222,13 +1222,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 4
   turningSpeed: 3
-  moveForwardKey: 119
-  moveBackwardKey: 115
-  moveRightKey: 100
-  moveLeftKey: 97
-  moveUpwardKey: 101
-  moveDownwardKey: 113
-  sprintKey: 304
+  mouseSensitivity: 2
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: acbae1d8-f19d-4bdc-ad06-b5629b97c5a0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lookAction:
+    m_Name: Look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b2802a36-d1e0-46fe-96d4-6640b8c209b1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  sprintAction:
+    m_Name: Sprint
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d16bfcdb-7f3b-4c44-981b-0457a5cde48c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  verticalMoveAction:
+    m_Name: Vertical Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 985b907b-bef3-4665-a62a-adbf7d8d6e3a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1001 &1524886770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2358,6 +2388,8 @@ MonoBehaviour:
   modelsetCode: 
   autoTracking: 1
   restartTracking: 1
+  confidenceCheck: 1
+  _confidenceThreshold: 0.3
   showAlert: 1
   captureDelay: 1
   ObjectTrackingInit:
@@ -2417,18 +2449,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7672203389283212930}
-        m_TargetAssemblyTypeName: MultiSet.ModelSetMeshHandler, MultiSetSDK
-        m_MethodName: LocalizationSuccess
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 457201100}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -2445,6 +2465,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8853957400298688844}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5067585787864801514}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
