@@ -6341,7 +6341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: enableBlurCheck
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: mapOrMapsetCode

@@ -11,9 +11,9 @@ Material:
   m_Shader: {fileID: 4800000, guid: d3907aedc9e91467499d6067ea1db8e8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _ANIMATIONTYPE_SPARK
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -62,10 +62,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
     - _AnimationType: 3
+    - _Blend: 0
     - _BreatheIntensity: 1.5
     - _BreatheSpeed: 0.8
     - _BumpScale: 1
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -77,7 +80,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowFalloff: 1.6
-    - _GlowIntensity: 4
+    - _GlowIntensity: 10
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -86,12 +89,15 @@ Material:
     - _PulseMax: 2.2
     - _PulseMin: 0.4
     - _PulseSpeed: 1.8
+    - _RimIntensity: 0.7
+    - _RimPower: 2
     - _SmoothnessTextureChannel: 0
     - _SparkFrequency: 8
-    - _SparkIntensity: 3
-    - _SparkSpeed: 3
+    - _SparkIntensity: 4
+    - _SparkSpeed: 4
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Surface: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

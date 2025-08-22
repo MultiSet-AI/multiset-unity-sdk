@@ -4674,13 +4674,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 4
   turningSpeed: 3
-  moveForwardKey: 119
-  moveBackwardKey: 115
-  moveRightKey: 100
-  moveLeftKey: 97
-  moveUpwardKey: 101
-  moveDownwardKey: 113
-  sprintKey: 304
+  mouseSensitivity: 2
+  moveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f172b042-69d2-4047-8364-3807533aa93d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lookAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f16b8558-88e9-438e-b850-f72708e89963
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  sprintAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 927ccb7f-1199-4a60-9aba-a27fa94e85f9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  verticalMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ed679eca-690d-4486-bb06-371b49d9f537
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!135 &1505451506
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9329,7 +9359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: enableBlurCheck
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1679518838212559247, guid: 7d7db1522ea264a50b02f09f6143d035, type: 3}
       propertyPath: mapOrMapsetCode

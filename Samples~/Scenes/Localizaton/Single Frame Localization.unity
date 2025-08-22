@@ -1367,7 +1367,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
 --- !u!4 &1524886771 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1743465714354293694, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
   m_PrefabInstance: {fileID: 1524886770}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1728653816
@@ -1919,7 +1919,7 @@ MonoBehaviour:
   relocalization: 1
   confidenceCheck: 1
   _confidenceThreshold: 0.3
-  _requestAttempts: 3
+  _requestAttempts: 1
   localizationInterval: 1
   showAlert: 1
   LocalizationInit:
