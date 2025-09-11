@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7912086527208042005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8475483811067198657}
+  - component: {fileID: 321557743427019405}
+  - component: {fileID: 6709876266643650172}
+  - component: {fileID: 3992405372502637027}
+  - component: {fileID: 3780568964051593749}
+  - component: {fileID: 5673241301660049586}
+  m_Layer: 0
+  m_Name: MappingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8475483811067198657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912086527208042005}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &321557743427019405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912086527208042005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -488426165, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_arSession: {fileID: 0}
+  m_xrOrigin: {fileID: 0}
+  m_CameraManager: {fileID: 0}
+  meshingObject: {fileID: 0}
+  meshPrefab: {fileID: 5002281369233153173, guid: f82fc6673bfa84545b8e81de2b69ce62, type: 3}
+  isMapping: 0
+  mapName: {fileID: 0}
+  startButton: {fileID: 0}
+  stopButton: {fileID: 0}
+  mapNamePanel: {fileID: 0}
+  mapNameError: {fileID: 0}
+  m_draftDetailsPopup: {fileID: 0}
+  uploadSuccessPopup: {fileID: 0}
+  authAlertPopup: {fileID: 0}
+  mLoader: {fileID: 0}
+  uploadPercText: {fileID: 0}
+--- !u!114 &6709876266643650172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912086527208042005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1456247626, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3992405372502637027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912086527208042005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 23840371, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3780568964051593749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912086527208042005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1060946336, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapper: {fileID: 321557743427019405}
+  showMovementAlert: 1
+  movementSpeedThreshold: 4
+  rotationSpeedThreshold: 80
+  arCameraTransform: {fileID: 0}
+  motionAlertDialog: {fileID: 0}
+--- !u!114 &5673241301660049586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912086527208042005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2134415037, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_draftMapListHolder: {fileID: 0}
+  m_draftMapCard: {fileID: 4830984869234995524, guid: 3084d5e3545574347abee16dce5bbe84, type: 3}
+  draftMapMenuPopup: {fileID: 0}
+  mapNameError: {fileID: 0}
+  draftMenu: {fileID: 0}
+  uploadSuccessPopup: {fileID: 0}
+  mLoader: {fileID: 0}
+  mapName: {fileID: 0}
+  uploadPercText: {fileID: 0}
+  draftsAvailable: 0

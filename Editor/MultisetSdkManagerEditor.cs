@@ -12,7 +12,7 @@ using UnityEditor;
 namespace MultiSet
 {
     [CustomEditor(typeof(MultisetSdkManager))]
-    public class MultiSetBehaviour : Editor
+    public class MultisetSdkManagerEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -29,6 +29,27 @@ namespace MultiSet
             {
                 OpenMultiSetConfig();
             }
+            
+            GUILayout.Space(20);
+
+            Texture2D logo = new Texture2D(2, 2);
+            logo.LoadImage(Base64ToImageConverter.LoadWatermark());
+
+            if (logo != null)
+            {
+                // GUILayout.Label(logo, GUILayout.Width(64), GUILayout.Height(64));
+
+                float width = EditorGUIUtility.currentViewWidth / 2; // 40 for padding
+                float aspect = (float)logo.height / logo.width;
+                float height = width * aspect;
+
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                GUILayout.Label(logo, GUILayout.Width(width), GUILayout.Height(height));
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+            }
+
         }
 
         private void OpenMultiSetConfig()

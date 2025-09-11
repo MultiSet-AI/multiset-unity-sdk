@@ -6,7 +6,7 @@ The MultiSet SDK provides powerful localization, navigation, and AR tracking cap
 
 Before getting started, ensure you have:
 
-- **Unity 6000.0.36f1 or later** (minimum: Unity 2022.3.36+)
+- **Unity 6000.0.55f1 or later**
 - **Valid MultiSet credentials** (Client ID and Client Secret)
 - **Map/MapSet/ModelSet codes** from your MultiSet dashboard
 - **iOS/Android development tools** for mobile deployment
@@ -14,7 +14,7 @@ Before getting started, ensure you have:
 
 ## 🚀 Installation
 
-### Method 1: Git URL (Recommended)
+### Git URL (Recommended)
 
 1. Open Unity and create a new **3D project** or open your existing project
 2. Navigate to **Window → Package Manager**
@@ -59,6 +59,7 @@ Assets/Samples/MultiSet-SDK/[version]/Sample Scenes/
 
 | Scene | Purpose | Location |
 |-------|---------|----------|
+| **Mapping.unity** | Basic mapping functionality | `Mapping/` |
 | **Localization.unity** | Basic localization functionality | `Localization/` |
 | **Single Frame Localization.unity** | Single-shot localization | `Localization/` |
 | **ModelSetTracking.unity** | 3D model tracking | `ModelSetTracking/` |
@@ -146,6 +147,7 @@ Assets/Samples/MultiSet-SDK/[version]/Sample Scenes/
 ### Core Classes
 
 - **`MultiSetSdkManager`**: Main SDK manager and entry point
+- **`MappingManager`**: Scan area and create map
 - **`MapLocalizationManager`**: Handles localization operations
 - **`NavigationController`**: Manages AR navigation features
 - **`ModelSetTrackingManager`**: Controls 3D model tracking

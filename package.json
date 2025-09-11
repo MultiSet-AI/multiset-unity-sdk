@@ -1,6 +1,6 @@
 {
   "name": "com.multiset.sdk",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "displayName": "MultiSet-SDK",
   "description": "The MultiSet developer documentation is your essential resource for creating and integrating MultiSet features into your application.",
   "unity": "6000.0",
@@ -19,7 +19,7 @@
   "samples": [
     {
       "displayName": "Sample Scenes",
-      "description": "Import Localization, Navigation, Training and ModelSetTracking Scenes from MultiSet-Unity-SDK",
+      "description": "Import Mapping, Localization, Navigation, Training and ModelSetTracking Scenes from MultiSet-Unity-SDK",
       "path": "Samples~/Scenes"
     }
   ]

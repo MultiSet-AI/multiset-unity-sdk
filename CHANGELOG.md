@@ -1,5 +1,10 @@
 # Changelog
-SDK 1.8.2
+SDK 1.9.0
+
+## [1.9.0] - 2025-11-09
+### Added
+- Mapping Scene Added
+- Bug Fixes
 
 ## [1.8.2] - 2025-22-08
 ### Added

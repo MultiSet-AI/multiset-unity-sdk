@@ -204,8 +204,6 @@ namespace MultiSet
                         try
                         {
                             File.WriteAllBytes(m_savePath, fileData);
-
-                            // string mapId = Util.GetMapId(meshUrl.url);
                             string finalFilePath = Path.Combine("Assets/MultiSet/MapData/" + mapOrMapsetCode, mapOrMapsetCode + ".glb");
 
                             // Refresh the Asset Database to make Unity recognize the new file
