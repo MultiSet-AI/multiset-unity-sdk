@@ -1526,6 +1526,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728653816}
   m_CullTransparentMesh: 1
+--- !u!1 &1790888350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1790888352}
+  - component: {fileID: 1790888353}
+  m_Layer: 0
+  m_Name: SimulationDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1790888352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790888350}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1790888353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790888350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2109719767, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDownloading: 0
+  isDownloadingFile: 0
+  isExtractingFile: 0
+  fileAlreadyExists: 0
+  alertMessage: 
+  alertTimer: 0
+  simulationDataResponse:
+    simulationData: []
+  selectedSimulationIndex: -1
+  simulationDataDir: SimulationData
 --- !u!1 &1849515172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,6 +2023,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 457201100}
     - target: {fileID: 4164677170919121941, guid: d27ef900e515242458c5368b1b0eadb3, type: 3}
+      propertyPath: mapOrMapsetCode
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164677170919121941, guid: d27ef900e515242458c5368b1b0eadb3, type: 3}
       propertyPath: LocalizationInit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 469727703}
@@ -2053,5 +2111,6 @@ SceneRoots:
   - {fileID: 795491380}
   - {fileID: 1900272168}
   - {fileID: 802942868146710618}
+  - {fileID: 1790888352}
   - {fileID: 282727323}
   - {fileID: 457201101}

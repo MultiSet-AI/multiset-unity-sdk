@@ -262,6 +262,7 @@ namespace MultiSet
             }
 
 #if UNITY_EDITOR
+
             GameObject importedObject = AssetDatabase.LoadAssetAtPath<GameObject>(glbPath);
 
             if (importedObject == null)
@@ -270,30 +271,34 @@ namespace MultiSet
                 return;
             }
 
+            // Save as prefab
+            string prefabPath = Path.Combine("Assets/MultiSet/MapData/", mapOrMapsetCode + ".prefab");
+            GameObject prefab = PrefabUtility.SaveAsPrefabAsset(importedObject, prefabPath);
+
             // Check if a GameObject with the same name already exists in the hierarchy
             GameObject existingObject = GameObject.Find(importedObject.name);
-            if (existingObject != null)
+            if (existingObject == null)
             {
-                Debug.LogWarning("Map Mesh with the name " + importedObject.name + " already exists in the hierarchy.");
-                return;
-            }
+                // Instantiate the prefab in the scene
+                GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                if (instance != null)
+                {
+                    instance.transform.SetParent(m_mapSpace.transform, false);
+                    instance.tag = "EditorOnly";
 
-            GameObject instance = PrefabUtility.InstantiatePrefab(importedObject) as GameObject;
-            if (instance != null)
-            {
-                instance.transform.SetParent(m_mapSpace.transform, false);
-
-                // Add EditorOnly Tag to the instantiated GameObject
-                instance.tag = "EditorOnly";
-
-                //save the gameObject as prefab 
-                string prefabPath = Path.Combine("Assets/MultiSet/MapData/", mapOrMapsetCode + ".prefab");
-                PrefabUtility.SaveAsPrefabAsset(instance, prefabPath);
-
+                    // Mark the scene as dirty so changes are saved
+                    #if UNITY_EDITOR
+                    UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(instance.scene);
+                    #endif
+                }
+                else
+                {
+                    Debug.LogError("Failed to instantiate the imported GLB object.");
+                }
             }
             else
             {
-                Debug.LogError("Failed to instantiate the imported GLB object.");
+                Debug.LogWarning("Map Mesh with the name " + importedObject.name + " already exists in the hierarchy.");
             }
 
             //Show Default Unity Dialog

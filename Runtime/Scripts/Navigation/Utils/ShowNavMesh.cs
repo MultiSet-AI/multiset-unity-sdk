@@ -7,6 +7,7 @@ Redistribution in source or binary forms must retain this notice.
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 /**
  * Enables visualisation of the NavMesh inside the editor and in app.
@@ -89,19 +90,55 @@ public class ShowNavMesh : MonoBehaviour
         // Assign the mesh to the MeshFilter
         meshFilter.mesh = navMeshMesh;
 
-        // Create a material for visualization
-        Material surfaceMaterial = new Material(Shader.Find("Standard"));
-        surfaceMaterial.color = surfaceColor;
-        surfaceMaterial.SetFloat("_Mode", 2); // Fade rendering mode
-        surfaceMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        surfaceMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        surfaceMaterial.SetInt("_ZWrite", 0);
-        surfaceMaterial.DisableKeyword("_ALPHATEST_ON");
-        surfaceMaterial.EnableKeyword("_ALPHABLEND_ON");
-        surfaceMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        surfaceMaterial.renderQueue = 3000;
+        // Create a material for visualization based on render pipeline
+        Material surfaceMaterial = CreateNavMeshMaterial();
 
         // Assign material to MeshRenderer
         meshRenderer.material = surfaceMaterial;
+    }
+
+    private Material CreateNavMeshMaterial()
+    {
+        Material surfaceMaterial;
+
+        RenderPipelineAsset currentRP = GraphicsSettings.currentRenderPipeline;
+
+        if (currentRP != null && currentRP.GetType().Name.Contains("UniversalRenderPipelineAsset"))
+        {
+            Shader urpShader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (urpShader == null)
+            {
+                urpShader = Shader.Find("Sprites/Default");
+            }
+
+            surfaceMaterial = new Material(urpShader);
+            surfaceMaterial.color = surfaceColor;
+
+            if (urpShader.name.Contains("Unlit"))
+            {
+                surfaceMaterial.SetFloat("_Surface", 1); // Transparent
+                surfaceMaterial.SetFloat("_Blend", 0); // Alpha
+                surfaceMaterial.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                surfaceMaterial.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                surfaceMaterial.SetFloat("_ZWrite", 0);
+                surfaceMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                surfaceMaterial.EnableKeyword("_ALPHABLEND_ON");
+            }
+        }
+        else
+        {
+            surfaceMaterial = new Material(Shader.Find("Standard"));
+            surfaceMaterial.color = surfaceColor;
+            surfaceMaterial.SetFloat("_Mode", 2);
+            surfaceMaterial.SetInt("_SrcBlend", (int)BlendMode.SrcAlpha);
+            surfaceMaterial.SetInt("_DstBlend", (int)BlendMode.OneMinusSrcAlpha);
+            surfaceMaterial.SetInt("_ZWrite", 0);
+            surfaceMaterial.DisableKeyword("_ALPHATEST_ON");
+            surfaceMaterial.EnableKeyword("_ALPHABLEND_ON");
+            surfaceMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        }
+
+        surfaceMaterial.renderQueue = 3000;
+        return surfaceMaterial;
     }
 }

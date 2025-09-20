@@ -1,5 +1,11 @@
 # Changelog
-SDK 1.9.0
+SDK 1.9.1
+
+## [1.9.1] - 2025-20-09
+### Added
+- Simulation support in Editor
+- Download and select simulation data to localize
+
 
 ## [1.9.0] - 2025-11-09
 ### Added
