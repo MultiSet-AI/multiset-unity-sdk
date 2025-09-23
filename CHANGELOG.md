@@ -1,5 +1,9 @@
 # Changelog
-SDK 1.9.1
+SDK 1.9.2
+
+## [1.9.2] - 2025-23-09
+### Added
+- Android build issue fixed
 
 ## [1.9.1] - 2025-20-09
 ### Added
