@@ -1,5 +1,11 @@
 # Changelog
-SDK 1.9.2
+SDK 1.9.3
+
+## [1.9.3] - 2025-11-11
+### Added
+- draco and gltfast package updated
+- fixed mapping scene issues
+
 
 ## [1.9.2] - 2025-23-09
 ### Added
@@ -29,4 +35,3 @@ SDK 1.9.2
 - Localization and Navigation sample scenes
 - Model Tracking sample scene
 - Training mode scene added
-
