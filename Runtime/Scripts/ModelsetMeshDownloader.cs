@@ -45,7 +45,7 @@ namespace MultiSet
             ModelsetTrackingManager modelsetTrackingManager = FindFirstObjectByType<ModelsetTrackingManager>();
             if (modelsetTrackingManager != null)
             {
-                modelSetCode = modelsetTrackingManager.modelsetCode;
+                modelSetCode = modelsetTrackingManager.modelsetCodes.FirstOrDefault();
             }
             else
             {

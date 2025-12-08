@@ -51,6 +51,7 @@ namespace MultiSet
 
             MapLocalizationManager mapLocalizationManager = FindFirstObjectByType<MapLocalizationManager>();
             SingleFrameLocalizationManager singleFrameLocalizationManager = FindFirstObjectByType<SingleFrameLocalizationManager>();
+            OnDeviceLocalizationManager onDeviceLocalizationManager = FindFirstObjectByType<OnDeviceLocalizationManager>();
 
             if (mapLocalizationManager != null)
             {
@@ -61,6 +62,11 @@ namespace MultiSet
             {
                 mapOrMapsetCode = singleFrameLocalizationManager.mapOrMapsetCode;
                 itsMap = singleFrameLocalizationManager.localizationType == LocalizationType.Map;
+            }
+            else if (onDeviceLocalizationManager != null)
+            {
+                mapOrMapsetCode = onDeviceLocalizationManager.mapOrMapsetCode;
+                itsMap = onDeviceLocalizationManager.localizationType == LocalizationType.Map;
             }
 
             if (string.IsNullOrWhiteSpace(mapOrMapsetCode))
@@ -287,9 +293,9 @@ namespace MultiSet
                     instance.tag = "EditorOnly";
 
                     // Mark the scene as dirty so changes are saved
-                    #if UNITY_EDITOR
+#if UNITY_EDITOR
                     UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(instance.scene);
-                    #endif
+#endif
                 }
                 else
                 {
@@ -475,7 +481,7 @@ namespace MultiSet
             }
 
 #if UNITY_EDITOR
-            
+
             GameObject importedObject = AssetDatabase.LoadAssetAtPath<GameObject>(glbPath);
 
             if (importedObject == null)

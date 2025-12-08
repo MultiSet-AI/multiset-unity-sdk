@@ -2027,6 +2027,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4164677170919121941, guid: d27ef900e515242458c5368b1b0eadb3, type: 3}
+      propertyPath: localizationType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164677170919121941, guid: d27ef900e515242458c5368b1b0eadb3, type: 3}
       propertyPath: LocalizationInit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 469727703}

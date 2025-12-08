@@ -1,5 +1,13 @@
 # Changelog
-SDK 1.9.3
+SDK 1.10.0
+
+## [1.10.0] - 2025-08-12
+### Added
+- On-Device Localization for iOS
+- MapSet Alignment Scene
+- ModelSet scene with ability to track multiple object
+- Simulation data capture sample scene
+
 
 ## [1.9.3] - 2025-11-11
 ### Added
