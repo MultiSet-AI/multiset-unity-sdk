@@ -1,5 +1,12 @@
 #import <Foundation/Foundation.h>
-#import <multiset_ios/main.h>
+
+// Check if multiset_ios framework is available - only required for on device localization
+#if __has_include(<multiset_ios/main.h>)
+    #import <multiset_ios/main.h>
+    #define MULTISET_IOS_AVAILABLE 1
+#else
+    #define MULTISET_IOS_AVAILABLE 0
+#endif
 
 // MultiSet Framework wrapper - iOS plugin interface
 extern "C" {
@@ -28,10 +35,21 @@ extern "C" {
                                 const char* hintMapCodes,
                                 const char* hintPosition,
                                 const char* geoCoordinates);
+    bool _IsOnDeviceLocalizationAvailable();
 }
 
 // Implementation
 extern "C" {
+
+    bool _IsOnDeviceLocalizationAvailable() {
+        #if MULTISET_IOS_AVAILABLE
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+#if MULTISET_IOS_AVAILABLE
 
     bool _LoadModels() {
         try {
@@ -142,4 +160,32 @@ extern "C" {
         }
         return result;
     }
+
+#else
+    // Stub implementations when multiset_ios framework is not available
+
+    bool _LoadModels() {
+        NSLog(@"MultiSet iOS framework not available - _LoadModels() returning false");
+        return false;
+    }
+
+    bool _LoadMaps(const char* dbDirPath, const char* mapIdentifier) {
+        NSLog(@"MultiSet iOS framework not available - _LoadMaps() returning false");
+        return false;
+    }
+
+    LocalizationResult _Localize(const char* mapCode, const char* mapSetCode, bool isRightHanded,
+                                bool convertToGeoCoordinates,
+                                float fx, float fy, float px, float py,
+                                const char* imageData, int width, int height,
+                                const char* hintMapCodes,
+                                const char* hintPosition,
+                                const char* geoCoordinates) {
+        NSLog(@"MultiSet iOS framework not available - _Localize() returning empty result");
+        LocalizationResult result = {};
+        result.poseFound = false;
+        return result;
+    }
+
+#endif
 }
