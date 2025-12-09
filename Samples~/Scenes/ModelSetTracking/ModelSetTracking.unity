@@ -3747,7 +3747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7856918384512968963, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: modelsetCodes.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7856918384512968963, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: 'modelsetCodes.Array.data[0]'
