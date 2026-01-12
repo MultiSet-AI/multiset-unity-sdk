@@ -1,19 +1,21 @@
 {
   "name": "com.multiset.sdk",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "displayName": "MultiSet-SDK",
   "description": "The MultiSet developer documentation is your essential resource for creating and integrating MultiSet features into your application.",
-  "unity": "6000.0",
-  "unityRelease": "62f1",
+  "unity": "6000.3",
+  "unityRelease": "3f1",
   "author": {
     "name": "MultiSet",
     "email": "nikhil@multiset.ai",
     "url": "https://www.multiset.ai/"
   },
   "dependencies": {
-     "com.unity.cloud.draco": "5.4.0",
-     "com.unity.cloud.gltfast": "6.14.1",
-     "com.unity.xr.arfoundation": "6.0.6",
+     "com.unity.cloud.draco": "5.4.2",
+     "com.unity.cloud.gltfast": "6.15.1",
+     "com.unity.xr.arcore": "6.3.2",
+     "com.unity.xr.arfoundation": "6.3.2",
+     "com.unity.xr.arkit": "6.3.2",
      "com.unity.ai.navigation": "2.0.9"
   },
   "samples": [

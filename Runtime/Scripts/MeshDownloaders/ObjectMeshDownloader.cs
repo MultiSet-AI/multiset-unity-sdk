@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 MultiSet AI. All rights reserved.
+Copyright (c) 2026 MultiSet AI. All rights reserved.
 Licensed under the MultiSet License. You may not use this file except in compliance with the License. and you can’t re-distribute this file without a prior notice
 For license details, visit www.multiset.ai.
 Redistribution in source or binary forms must retain this notice.
@@ -18,18 +18,18 @@ using UnityEditor;
 
 namespace MultiSet
 {
-    public class ModelsetMeshDownloader : MonoBehaviour
+    public class ObjectMeshDownloader : MonoBehaviour
     {
         [Space(10)]
         [Tooltip("Drag and drop the ObjectSpace GameObject here.")]
         public GameObject m_objectSpace;
-        private string modelSetCode;
-        private ModelSet m_modelSet;
+        private string objectCode;
+        private ModelSet m_object;
         private string m_savePath;
 
         [HideInInspector]
         public bool isDownloading = false;
-        int loadedModelSets = 0;
+        int loadedObjects = 0;
 
         public void DownloadMesh()
         {
@@ -38,26 +38,26 @@ namespace MultiSet
                 return;
             }
 
-            loadedModelSets = 0;
+            loadedObjects = 0;
             isDownloading = true;
 
             MultisetSdkManager multisetSdkManager = FindFirstObjectByType<MultisetSdkManager>();
-            ModelsetTrackingManager modelsetTrackingManager = FindFirstObjectByType<ModelsetTrackingManager>();
-            if (modelsetTrackingManager != null)
+            ObjectTrackingManager objectTrackingManager = FindFirstObjectByType<ObjectTrackingManager>();
+            if (objectTrackingManager != null)
             {
-                modelSetCode = modelsetTrackingManager.modelsetCodes.FirstOrDefault();
+                objectCode = objectTrackingManager.objectCodes.FirstOrDefault();
             }
             else
             {
                 isDownloading = false;
-                Debug.LogError("ModelSetTrackingManager not found in the scene!");
+                Debug.LogError("ObjectTrackingManager not found in the scene!");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(modelSetCode))
+            if (string.IsNullOrWhiteSpace(objectCode))
             {
                 isDownloading = false;
-                Debug.LogError("ModelSet Code Missing in ModelSetTrackingManager!!");
+                Debug.LogError("Object Code Missing in ObjectTrackingManager!!");
                 return;
             }
 
@@ -97,9 +97,9 @@ namespace MultiSet
         {
             if (eventData.AuthSuccess)
             {
-                Debug.Log("Fetching ModelSet data..");
+                Debug.Log("Fetching Object data..");
 
-                GetModelSetDetails(modelSetCode);
+                GetObjectDetails(objectCode);
             }
             else
             {
@@ -112,43 +112,43 @@ namespace MultiSet
         }
 
         #region MODEL-SET-DATA
-        private void GetModelSetDetails(string modelSetCode)
+        private void GetObjectDetails(string modelSetCode)
         {
-            MultiSetApiManager.GetModelSetDetails(modelSetCode, ModelSetDetailsCallback);
+            MultiSetApiManager.GetObjectDetails(modelSetCode, ObjectDetailsCallback);
         }
 
-        private void ModelSetDetailsCallback(bool success, string data, long statusCode)
+        private void ObjectDetailsCallback(bool success, string data, long statusCode)
         {
             if (string.IsNullOrEmpty(data))
             {
                 isDownloading = false;
-                Debug.LogError("Error : ModelSet Details Callback: Empty or null data received!");
+                Debug.LogError("Error : Object Details Callback: Empty or null data received!");
                 return;
             }
 
             if (success)
             {
-                m_modelSet = JsonUtility.FromJson<ModelSet>(data);
-                DownloadGlbFileEditor(m_modelSet);
+                m_object = JsonUtility.FromJson<ModelSet>(data);
+                DownloadGlbFileEditor(m_object);
             }
             else
             {
                 isDownloading = false;
-                Debug.LogError("Get ModelSet Details failed!" + data);
+                Debug.LogError("Get Object Details failed!" + data);
             }
         }
 
         public void DownloadGlbFileEditor(ModelSet modelSet)
         {
-            string directoryPath = Path.Combine(Application.dataPath, "MultiSet/ModelData/" + modelSetCode);
-            string finalFilePath = Path.Combine("Assets/MultiSet/ModelData/" + modelSetCode, modelSetCode + ".glb");
+            string directoryPath = Path.Combine(Application.dataPath, "MultiSet/ModelData/" + objectCode);
+            string finalFilePath = Path.Combine("Assets/MultiSet/ModelData/" + objectCode, objectCode + ".glb");
 
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
-            m_savePath = Path.Combine(directoryPath, modelSetCode + ".glb");
+            m_savePath = Path.Combine(directoryPath, objectCode + ".glb");
 
             if (File.Exists(m_savePath))
             {
@@ -186,7 +186,7 @@ namespace MultiSet
                         {
                             File.WriteAllBytes(m_savePath, fileData);
 
-                            string finalFilePath = Path.Combine("Assets/MultiSet/ModelData/" + modelSetCode, modelSetCode + ".glb");
+                            string finalFilePath = Path.Combine("Assets/MultiSet/ModelData/" + objectCode, objectCode + ".glb");
 
                             // Refresh the Asset Database to make Unity recognize the new file
 #if UNITY_EDITOR
@@ -254,7 +254,7 @@ namespace MultiSet
             }
 
             // Save as prefab
-            string prefabPath = Path.Combine("Assets/MultiSet/ModelData/", modelSetCode + ".prefab");
+            string prefabPath = Path.Combine("Assets/MultiSet/ModelData/", objectCode + ".prefab");
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(importedObject, prefabPath);
 
             // Check if a GameObject with the same name already exists in the hierarchy

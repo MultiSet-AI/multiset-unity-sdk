@@ -1,5 +1,11 @@
 # Changelog
-SDK 1.10.0
+SDK 1.10.1
+
+## [1.10.1] - 2025-12-01
+### Added
+- On-Device Localization Public methods added
+- Modular Mapping scene
+- new Mesh Animation added
 
 ## [1.10.0] - 2025-08-12
 ### Added

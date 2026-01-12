@@ -68,6 +68,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _GlowIntensity: 3
+    - _GlowPulseSpeed: 4.37
+    - _GlowWidth: 0.05
     - _GridLineWidth: 0.02
     - _GridSize: 1
     - _Metallic: 0
@@ -75,7 +78,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Progress: 0
-    - _Radius: 1
+    - _Radius: 10
     - _ShowGrid: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -84,9 +87,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Center: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.48235294, g: 0.17254902, b: 0.7490196, a: 0.5019608}
+    - _Color: {r: 0.4823529, g: 0.17254898, b: 0.7490196, a: 0.6}
     - _Direction: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _GlowColor: {r: 1, g: 0.22601745, b: 0, a: 1}
     - _GridColor: {r: 1, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

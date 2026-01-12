@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5956448408235500343}
   - component: {fileID: 7893194454562664071}
   m_Layer: 0
-  m_Name: ModelsetMeshDownloader
+  m_Name: ObjectMeshDownloader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

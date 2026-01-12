@@ -11,6 +11,11 @@ Shader "Custom/RadialMaterialApplication"
         _GridSize ("Grid Size", Float) = 1.0
         _GridLineWidth ("Grid Line Width", Range(0.01, 0.1)) = 0.02
         _ShowGrid ("Show Grid", Range(0, 1)) = 1
+
+        [Header(Edge Glow)]
+        _GlowColor ("Glow Color", Color) = (0, 1, 1, 1)
+        _GlowWidth ("Glow Width", Range(0.001, 0.2)) = 0.05
+        _GlowIntensity ("Glow Intensity", Range(0, 5)) = 2.0
     }
     
     // URP SubShader - Will be used if URP is active
@@ -67,7 +72,7 @@ Shader "Custom/RadialMaterialApplication"
             #ifdef URP_AVAILABLE
                 TEXTURE2D(_MainTex);
                 SAMPLER(sampler_MainTex);
-                
+
                 CBUFFER_START(UnityPerMaterial)
                     float4 _MainTex_ST;
                     half4 _Color;
@@ -78,6 +83,9 @@ Shader "Custom/RadialMaterialApplication"
                     float _GridSize;
                     float _GridLineWidth;
                     float _ShowGrid;
+                    half4 _GlowColor;
+                    float _GlowWidth;
+                    float _GlowIntensity;
                 CBUFFER_END
             #else
                 sampler2D _MainTex;
@@ -90,6 +98,9 @@ Shader "Custom/RadialMaterialApplication"
                 float _GridSize;
                 float _GridLineWidth;
                 float _ShowGrid;
+                fixed4 _GlowColor;
+                float _GlowWidth;
+                float _GlowIntensity;
             #endif
             
             float GetGridFactor(float3 worldPos, float3 worldNormal, float gridSize, float lineWidth)
@@ -147,49 +158,58 @@ Shader "Custom/RadialMaterialApplication"
                 #else
                     half4 c = tex2D(_MainTex, input.uv) * _Color;
                 #endif
-                
+
                 #ifdef URP_AVAILABLE
                     float3 objectSpacePos = mul(UNITY_MATRIX_I_M, float4(input.positionWS, 1.0)).xyz;
                 #else
                     float3 objectSpacePos = mul(unity_WorldToObject, float4(input.positionWS, 1.0)).xyz;
                 #endif
-                
+
                 float distanceFromCenter = distance(objectSpacePos, _Center);
-                float normalizedDistance = distanceFromCenter / _Radius;
-                
+                float normalizedDistance = distanceFromCenter / max(_Radius, 0.001);
+
                 float threshold = _Progress;
-                
-                if (normalizedDistance < threshold)
-                {
-                    float gridFactor = GetGridFactor(input.positionWS, input.normalWS, _GridSize, _GridLineWidth);
-                    
-                    float3 finalColor = lerp(c.rgb, _GridColor.rgb, gridFactor * _ShowGrid);
-                    float finalAlpha = max(c.a, gridFactor * _GridColor.a * _ShowGrid);
-                    
-                    // Ensure minimum alpha for VR visibility
-                    finalAlpha = max(finalAlpha, 0.3);
-                    
-                    // Simple lighting
-                    #ifdef URP_AVAILABLE
-                        Light mainLight = GetMainLight();
-                        float ndotl = max(0.3, dot(input.normalWS, mainLight.direction)); // Increased minimum lighting
-                        float3 lighting = mainLight.color * ndotl + half3(0.4, 0.4, 0.4); // Increased ambient
-                    #else
-                        float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-                        float ndotl = max(0.3, dot(input.normalWS, worldLightDir)); // Increased minimum lighting
-                        float3 lighting = _LightColor0.rgb * ndotl + half3(0.4, 0.4, 0.4); // Increased ambient
-                    #endif
-                    
-                    finalColor *= lighting;
-                    
-                    return half4(finalColor, finalAlpha);
-                }
-                else
-                {
-                    // Use discard instead of transparent black for better VR performance
-                    discard;
-                    return half4(0,0,0,0);
-                }
+
+                // Calculate distance from the edge (threshold boundary)
+                float distanceFromEdge = threshold - normalizedDistance;
+
+                // Use clip() for mobile compatibility - negative values are discarded
+                clip(threshold - normalizedDistance - 0.001);
+
+                float gridFactor = GetGridFactor(input.positionWS, input.normalWS, _GridSize, _GridLineWidth);
+
+                float3 finalColor = lerp(c.rgb, _GridColor.rgb, gridFactor * _ShowGrid);
+                float finalAlpha = max(c.a, gridFactor * _GridColor.a * _ShowGrid);
+
+                // Calculate edge glow - use saturate to ensure non-negative for pow()
+                float glowFactor = saturate(1.0 - saturate(distanceFromEdge / max(_GlowWidth, 0.001)));
+                glowFactor = glowFactor * glowFactor; // Square instead of pow() for mobile compatibility
+
+                // Apply glow to color
+                float3 glowContribution = _GlowColor.rgb * glowFactor * _GlowIntensity;
+                finalColor += glowContribution;
+
+                // Boost alpha at the edge for visibility
+                finalAlpha = max(finalAlpha, glowFactor * _GlowColor.a);
+
+                // Ensure minimum alpha for VR visibility
+                finalAlpha = max(finalAlpha, 0.3);
+
+                // Simple lighting
+                #ifdef URP_AVAILABLE
+                    Light mainLight = GetMainLight();
+                    float ndotl = max(0.3, dot(input.normalWS, mainLight.direction));
+                    float3 lighting = mainLight.color * ndotl + float3(0.4, 0.4, 0.4);
+                #else
+                    float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+                    float ndotl = max(0.3, dot(input.normalWS, worldLightDir));
+                    float3 lighting = _LightColor0.rgb * ndotl + float3(0.4, 0.4, 0.4);
+                #endif
+
+                // Apply lighting but preserve glow brightness
+                finalColor = finalColor * lighting + glowContribution * 0.5;
+
+                return half4(finalColor, finalAlpha);
             }
             ENDHLSL
         }
@@ -212,10 +232,12 @@ Shader "Custom/RadialMaterialApplication"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile_fwdbase
-            
+            #pragma target 3.0
+            #pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
+
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
+            #include "AutoLight.cginc"
             
             sampler2D _MainTex;
             float4 _MainTex_ST;
@@ -227,7 +249,10 @@ Shader "Custom/RadialMaterialApplication"
             float _GridSize;
             float _GridLineWidth;
             float _ShowGrid;
-            
+            fixed4 _GlowColor;
+            float _GlowWidth;
+            float _GlowIntensity;
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -282,37 +307,47 @@ Shader "Custom/RadialMaterialApplication"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 c = tex2D(_MainTex, i.uv) * _Color;
-                
+
                 float3 objectSpacePos = mul(unity_WorldToObject, float4(i.worldPos, 1.0)).xyz;
                 float distanceFromCenter = distance(objectSpacePos, _Center);
-                float normalizedDistance = distanceFromCenter / _Radius;
-                
+                float normalizedDistance = distanceFromCenter / max(_Radius, 0.001);
+
                 float threshold = _Progress;
-                
-                if (normalizedDistance < threshold)
-                {
-                    float gridFactor = GetGridFactor(i.worldPos, i.worldNormal, _GridSize, _GridLineWidth);
-                    
-                    float3 finalColor = lerp(c.rgb, _GridColor.rgb, gridFactor * _ShowGrid);
-                    float finalAlpha = max(c.a, gridFactor * _GridColor.a * _ShowGrid);
-                    
-                    // Ensure minimum alpha for VR visibility
-                    finalAlpha = max(finalAlpha, 0.3);
-                    
-                    // Simple Lambert lighting with increased ambient for VR
-                    float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-                    float ndotl = max(0.3, dot(i.worldNormal, worldLightDir)); // Increased minimum lighting
-                    float3 lighting = _LightColor0.rgb * ndotl + half3(0.4, 0.4, 0.4); // Increased ambient
-                    finalColor *= lighting;
-                    
-                    return fixed4(finalColor, finalAlpha);
-                }
-                else
-                {
-                    // Use discard instead of transparent black for better VR performance
-                    discard;
-                    return fixed4(0,0,0,0);
-                }
+
+                // Calculate distance from the edge (threshold boundary)
+                float distanceFromEdge = threshold - normalizedDistance;
+
+                // Use clip() for mobile compatibility - negative values are discarded
+                clip(threshold - normalizedDistance - 0.001);
+
+                float gridFactor = GetGridFactor(i.worldPos, i.worldNormal, _GridSize, _GridLineWidth);
+
+                float3 finalColor = lerp(c.rgb, _GridColor.rgb, gridFactor * _ShowGrid);
+                float finalAlpha = max(c.a, gridFactor * _GridColor.a * _ShowGrid);
+
+                // Calculate edge glow - use saturate to ensure non-negative for pow()
+                float glowFactor = saturate(1.0 - saturate(distanceFromEdge / max(_GlowWidth, 0.001)));
+                glowFactor = glowFactor * glowFactor; // Square instead of pow() for mobile compatibility
+
+                // Apply glow to color
+                float3 glowContribution = _GlowColor.rgb * glowFactor * _GlowIntensity;
+                finalColor += glowContribution;
+
+                // Boost alpha at the edge for visibility
+                finalAlpha = max(finalAlpha, glowFactor * _GlowColor.a);
+
+                // Ensure minimum alpha for VR visibility
+                finalAlpha = max(finalAlpha, 0.3);
+
+                // Simple Lambert lighting with increased ambient
+                float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+                float ndotl = max(0.3, dot(i.worldNormal, worldLightDir));
+                float3 lighting = _LightColor0.rgb * ndotl + float3(0.4, 0.4, 0.4);
+
+                // Apply lighting but preserve glow brightness
+                finalColor = finalColor * lighting + glowContribution * 0.5;
+
+                return fixed4(finalColor, finalAlpha);
             }
             ENDCG
         }
@@ -336,6 +371,9 @@ Shader "Custom/RadialMaterialApplication"
         float _GridSize;
         float _GridLineWidth;
         float _ShowGrid;
+        fixed4 _GlowColor;
+        float _GlowWidth;
+        float _GlowIntensity;
 
         struct Input
         {
@@ -373,28 +411,40 @@ Shader "Custom/RadialMaterialApplication"
         void surf (Input IN, inout SurfaceOutput o)
         {
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            
+
             float3 objectSpacePos = mul(unity_WorldToObject, float4(IN.worldPos, 1.0)).xyz;
             float distanceFromCenter = distance(objectSpacePos, _Center);
-            float normalizedDistance = distanceFromCenter / _Radius;
-            
+            float normalizedDistance = distanceFromCenter / max(_Radius, 0.001);
+
             float threshold = _Progress;
-            
-            if (normalizedDistance < threshold)
-            {
-                float gridFactor = GetGridFactor(IN.worldPos, IN.worldNormal, _GridSize, _GridLineWidth);
-                
-                float3 finalColor = lerp(c.rgb, _GridColor.rgb, gridFactor * _ShowGrid);
-                float finalAlpha = max(c.a, gridFactor * _GridColor.a * _ShowGrid);
-                
-                o.Albedo = finalColor;
-                o.Alpha = finalAlpha;
-            }
-            else
-            {
-                o.Albedo = float3(0,0,0);
-                o.Alpha = 0;
-            }
+
+            // Use clip() for mobile compatibility - negative values are discarded
+            clip(threshold - normalizedDistance - 0.001);
+
+            // Calculate distance from the edge (threshold boundary)
+            float distanceFromEdge = threshold - normalizedDistance;
+
+            float gridFactor = GetGridFactor(IN.worldPos, IN.worldNormal, _GridSize, _GridLineWidth);
+
+            float3 finalColor = lerp(c.rgb, _GridColor.rgb, gridFactor * _ShowGrid);
+            float finalAlpha = max(c.a, gridFactor * _GridColor.a * _ShowGrid);
+
+            // Calculate edge glow - use saturate to ensure non-negative for pow()
+            float glowFactor = saturate(1.0 - saturate(distanceFromEdge / max(_GlowWidth, 0.001)));
+            glowFactor = glowFactor * glowFactor; // Square instead of pow() for mobile compatibility
+
+            // Apply glow to color (added as emission for surface shader)
+            float3 glowContribution = _GlowColor.rgb * glowFactor * _GlowIntensity;
+
+            // Boost alpha at the edge for visibility
+            finalAlpha = max(finalAlpha, glowFactor * _GlowColor.a);
+
+            // Ensure minimum alpha for visibility
+            finalAlpha = max(finalAlpha, 0.3);
+
+            o.Albedo = finalColor;
+            o.Emission = glowContribution;
+            o.Alpha = finalAlpha;
         }
         ENDCG
     }
