@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: -2109719767, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: MultiSetSDK.dll::MultiSet.SimulationDataManager
   isDownloading: 0
   isDownloadingFile: 0
   isExtractingFile: 0

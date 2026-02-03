@@ -20,9 +20,9 @@ namespace MultiSet
             ObjectMeshDownloader mapMeshDownloader = (ObjectMeshDownloader)target;
 
             GUILayout.Space(20);
-            EditorGUILayout.HelpBox("Download Object Mesh in Editor Mode. Helps to setup AR Scene", MessageType.Info);
+            EditorGUILayout.HelpBox("Download Object's Mesh in Editor Mode. Helps to setup AR Scene", MessageType.Info);
 
-            GUIContent buttonContent = new GUIContent("Download Mesh", "This downloads the mesh file for the specified ModelSet.");
+            GUIContent buttonContent = new GUIContent("Download Mesh", "This downloads the mesh file for the specified Object.");
             GUILayout.Space(20);
 
             if (mapMeshDownloader.isDownloading)
@@ -33,7 +33,7 @@ namespace MultiSet
             else
             {
                 GUI.backgroundColor = GUI.backgroundColor; // Reset to default color
-                buttonContent.text = "Download Object Mesh";
+                buttonContent.text = "Download Object's Mesh";
             }
 
             if (GUILayout.Button(buttonContent, GUILayout.Height(30))) // Increase the height to 30

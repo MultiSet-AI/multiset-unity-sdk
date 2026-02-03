@@ -1,6 +1,6 @@
 {
   "name": "com.multiset.sdk",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "displayName": "MultiSet-SDK",
   "description": "The MultiSet developer documentation is your essential resource for creating and integrating MultiSet features into your application.",
   "unity": "6000.3",

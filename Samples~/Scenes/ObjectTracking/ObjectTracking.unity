@@ -366,38 +366,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &457201100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 457201101}
-  m_Layer: 0
-  m_Name: ObjectSpace
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &457201101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457201100}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1524886771}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &533429804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +971,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: -2109719767, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: MultiSetSDK.dll::MultiSet.SimulationDataManager
   isDownloading: 0
   isDownloadingFile: 0
   isExtractingFile: 0
@@ -1011,99 +979,8 @@ MonoBehaviour:
   alertMessage: 
   alertTimer: 0
   simulationDataResponse:
-    simulationData:
-    - _id: 6943ac7b54a1bd0c933ad8b2
-      name: Iphone
-      fileSize: 387040
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 316D5576
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/6943ac7b54a1bd0c933ad8b2/6943ac7b54a1bd0c933ad8b2.zip
-    - _id: 6936f59443fa6fe94d6b899f
-      name: Sdk release data
-      fileSize: 393810
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 38D0965E
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/6936f59443fa6fe94d6b899f/6936f59443fa6fe94d6b899f.zip
-    - _id: 692ead70efa4e3f9fdd704cf
-      name: Sim data
-      fileSize: 399799
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 5C97669D
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/692ead70efa4e3f9fdd704cf/692ead70efa4e3f9fdd704cf.zip
-    - _id: 692ea25defa4e3f9fdd6fbd5
-      name: Test sdk 1
-      fileSize: 379443
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 9CD1088C
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/692ea25defa4e3f9fdd6fbd5/692ea25defa4e3f9fdd6fbd5.zip
-    - _id: 692ea227efa4e3f9fdd6fbb1
-      name: Test sdk
-      fileSize: 415500
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 03479080
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/692ea227efa4e3f9fdd6fbb1/692ea227efa4e3f9fdd6fbb1.zip
-    - _id: 68ed261c0d19b78bfc131157
-      name: Gps map 2
-      fileSize: 673580
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 561B56B2
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68ed261c0d19b78bfc131157/68ed261c0d19b78bfc131157.zip
-    - _id: 68ecebdb0d19b78bfc130c1a
-      name: Gps data
-      fileSize: 478522
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 2980955C
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68ecebdb0d19b78bfc130c1a/68ecebdb0d19b78bfc130c1a.zip
-    - _id: 68d12a7b3b41360787e11bd0
-      name: android data
-      fileSize: 220857
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 11C46DB2
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68d12a7b3b41360787e11bd0/68d12a7b3b41360787e11bd0.zip
-    - _id: 68ce77e43b41360787e0e163
-      name: Elep
-      fileSize: 447634
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 959D1E81
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68ce77e43b41360787e0e163/68ce77e43b41360787e0e163.zip
-    - _id: 68cd37043b41360787e0bd34
-      name: Sim data
-      fileSize: 424118
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: AC9FBFF7
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68cd37043b41360787e0bd34/68cd37043b41360787e0bd34.zip
-    - _id: 68cbd9923b41360787e07085
-      name: Unicorn
-      fileSize: 400360
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: DC4C54F4
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68cbd9923b41360787e07085/68cbd9923b41360787e07085.zip
-    - _id: 68cbca563b41360787e0675f
-      name: V2 data
-      fileSize: 385480
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 682CE426
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68cbca563b41360787e0675f/68cbca563b41360787e0675f.zip
-    - _id: 68cbad12a01b8e11a395d06f
-      name: Hall Simulation Data
-      fileSize: 339246
-      originalFilename: SimulationData.Zip
-      status: active
-      simulationCode: 0CAC968D
-      s3Key: 671b80be33d6dc761ca15253/simulation_data/68cbad12a01b8e11a395d06f/68cbad12a01b8e11a395d06f.zip
-  selectedSimulationIndex: 10
+    simulationData: []
+  selectedSimulationIndex: -1
   simulationDataDir: SimulationData
 --- !u!1 &1309741599
 GameObject:
@@ -1536,76 +1413,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1001 &1524886770
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 457201101}
-    m_Modifications:
-    - target: {fileID: 260162862028363360, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_Name
-      value: Gizmo
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363360, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 260162862028363361, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7479182704605684996, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
---- !u!4 &1524886771 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1743465714354293694, guid: 1857ce5e5e71e4f12b2c444fda4771c9, type: 3}
-  m_PrefabInstance: {fileID: 1524886770}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1728653816
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,6 +2015,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4378107444079971081}
   m_CullTransparentMesh: 1
+--- !u!1 &2874848083631852082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7190105751173177430}
+  m_Layer: 0
+  m_Name: ObjectSpace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!222 &3160944030398619133
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2365,7 +2188,7 @@ PrefabInstance:
     - target: {fileID: 7893194454562664071, guid: 3167581fe93ef4341847efd662870891, type: 3}
       propertyPath: m_objectSpace
       value: 
-      objectReference: {fileID: 457201100}
+      objectReference: {fileID: 2874848083631852082}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2573,6 +2396,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &7190105751173177430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2874848083631852082}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7208199641077959283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2654,12 +2492,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1505451503}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
+      propertyPath: objectSpace
+      value: 
+      objectReference: {fileID: 2874848083631852082}
+    - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: objectCodes.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: 'objectCodes.Array.data[0]'
-      value: OBJ_VT7SETGRHRQY
+      value: OBJ_AW08ZCRB4UDP
       objectReference: {fileID: 0}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: 'objectCodes.Array.data[1]'
@@ -2700,7 +2542,7 @@ PrefabInstance:
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: ObjectTrackingSuccess.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 457201100}
+      objectReference: {fileID: 2874848083631852082}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: ObjectTrackingRequested.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2848,4 +2690,4 @@ SceneRoots:
   - {fileID: 4146650430920227516}
   - {fileID: 1044604158}
   - {fileID: 282727323}
-  - {fileID: 457201101}
+  - {fileID: 7190105751173177430}
