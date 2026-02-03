@@ -1,7 +1,7 @@
 # Changelog
-SDK 1.10.2
+SDK 1.11.0
 
-## [1.10.2] - 2025-03-02
+## [1.11.0] - 2025-03-02
 ### Added
 - Resolved issues in Multi-Object Tracking
 - Fixed multiple memory leak problems to improve stability
