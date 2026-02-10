@@ -1,7 +1,11 @@
 # Changelog
-SDK 1.11.0
+SDK 1.11.1
 
-## [1.11.0] - 2025-03-02
+## [1.11.1] - 2026-10-02
+### Added
+- New scene added to export NavMesh data that can be used to Multiset Wearable VPS
+
+## [1.11.0] - 2026-03-02
 ### Added
 - Resolved issues in Multi-Object Tracking
 - Fixed multiple memory leak problems to improve stability
