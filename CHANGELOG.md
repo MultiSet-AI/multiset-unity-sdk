@@ -1,5 +1,10 @@
 # Changelog
-SDK 1.11.1
+SDK 1.11.2
+
+## [1.11.2] - 2026-18-02
+### Added
+- Fixed issues with multi-object tracking
+- Added the ability to retrieve a MapCode after creating a new map
 
 ## [1.11.1] - 2026-10-02
 ### Added
