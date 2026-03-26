@@ -13,10 +13,10 @@
   "dependencies": {
     "com.unity.cloud.draco": "5.4.2",
     "com.unity.cloud.gltfast": "6.15.1",
-    "com.unity.xr.arcore": "6.3.2",
-    "com.unity.xr.arfoundation": "6.3.2",
-    "com.unity.xr.arkit": "6.3.2",
-    "com.unity.ai.navigation": "2.0.9"
+    "com.unity.xr.arcore": "6.3.3",
+    "com.unity.xr.arfoundation": "6.3.3",
+    "com.unity.xr.arkit": "6.3.3",
+    "com.unity.ai.navigation": "2.0.11"
   },
   "samples": [
     {
