@@ -1,5 +1,10 @@
 # Changelog
-SDK 1.11.2
+SDK 1.11.3
+
+## [1.11.3] - 2026-26-03
+### Added
+- Updated Unity version requirement to 6000.3.11f1
+
 
 ## [1.11.2] - 2026-18-02
 ### Added

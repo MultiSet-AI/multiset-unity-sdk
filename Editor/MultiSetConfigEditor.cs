@@ -53,6 +53,12 @@ namespace MultiSet
                             Repaint();
                         }
                     }
+                    else
+                    {
+                        m_verifyMessage = "MultisetSdkManager not found in the scene. Please add it to the scene before verifying credentials.";
+                        m_messageType = MessageType.Error;
+                        Repaint();
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(m_verifyMessage))
