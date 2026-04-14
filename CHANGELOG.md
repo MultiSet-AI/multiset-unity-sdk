@@ -1,10 +1,14 @@
 # Changelog
-SDK 1.11.3
+SDK 1.11.4
+
+## [1.11.4] - 2026-14-04
+### Added
+- Optimized multi-frame flow, fixed hintPosition, and improved Single Frame navigation.
+- Navigation issue fixes
 
 ## [1.11.3] - 2026-26-03
 ### Added
 - Updated Unity version requirement to 6000.3.11f1
-
 
 ## [1.11.2] - 2026-18-02
 ### Added

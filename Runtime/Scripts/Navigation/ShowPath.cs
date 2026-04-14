@@ -50,6 +50,14 @@ public class ShowPath : MonoBehaviour
     // Flag to track if we need to force path recalculation
     bool forcePathRecalculation = false;
 
+    // Accumulates time (in recalculation cycles) while path is invalid.
+    // Navigation stops only after this exceeds invalidPathTimeout, preventing
+    // premature stops when the user temporarily leaves the NavMesh surface.
+    float _invalidPathTimer = 0f;
+
+    [Tooltip("Seconds of continuous invalid path before stopping navigation")]
+    public float invalidPathTimeout = 15f;
+
     void Awake()
     {
         instance = this;
@@ -70,37 +78,45 @@ public class ShowPath : MonoBehaviour
     {
         if (a != null && b != null)
         {
-            line.enabled = true;
-
             // Calculate path only twice per second (every 0.5 seconds)
             _elapsed += Time.deltaTime;
             if (_elapsed > pathUpdateFrequency || forcePathRecalculation)
             {
-                // line.SetPosition(0, a.position); // set first point of line
-
-                StartCoroutine(DrawPath(path));
-                PathEstimationUtils.instance.UpdateEstimation(path.corners);
-
-
+                NavMesh.CalculatePath(a.position, b.position, NavMesh.AllAreas, path);
                 _elapsed = 0.0f;
                 forcePathRecalculation = false;
-                NavMesh.CalculatePath(a.position, b.position, NavMesh.AllAreas, path);
+
+                // Check status immediately after calculation so it's never stale
+                if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
+                {
+                    // Hide the line while path is invalid (off NavMesh or temporarily blocked)
+                    line.enabled = false;
+                    SetCornerVisibility(false);
+
+                    // Accumulate invalid time; only stop navigation after the timeout expires.
+                    // This prevents a permanent stop when the user briefly leaves the NavMesh surface.
+                    _invalidPathTimer += pathUpdateFrequency;
+                    if (_invalidPathTimer >= invalidPathTimeout && NavigationController.instance.IsCurrentlyNavigating())
+                    {
+                        _invalidPathTimer = 0f;
+                        ToastManager.Instance.ShowAlert("Problem calculating route");
+                        NavigationController.instance.StopNavigation();
+                    }
+                }
+                else
+                {
+                    // Path is valid — reset timeout, draw path, and ensure line is visible
+                    _invalidPathTimer = 0f;
+                    line.enabled = true;
+                    StartCoroutine(DrawPath(path));
+                    PathEstimationUtils.instance.UpdateEstimation(path.corners);
+                }
             }
         }
         else
         {
             line.enabled = false;
             SetCornerVisibility(false);
-        }
-
-        if (a != null && b != null && NavigationController.instance.IsCurrentlyNavigating())
-        {
-            if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
-            {
-                // handle unreachable route
-                ToastManager.Instance.ShowAlert("Problem calculating route");
-                NavigationController.instance.StopNavigation();
-            }
         }
     }
 
@@ -151,6 +167,7 @@ public class ShowPath : MonoBehaviour
         StopAllCoroutines();
         a = null;
         b = null;
+        _invalidPathTimer = 0f;
         line.positionCount = 1;
     }
 

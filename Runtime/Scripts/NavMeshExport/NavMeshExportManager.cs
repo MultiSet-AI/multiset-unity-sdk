@@ -38,6 +38,10 @@ public class NavMeshExportManager : MonoBehaviour
     [Range(0.5f, 5f)]
     public float navMeshSampleDistance = 2f;
 
+    [Tooltip("Minimum distance from NavMesh edge to place a waypoint. Waypoints closer to edges than this are discarded.")]
+    [Range(0.1f, 3f)]
+    public float edgeMargin = 0.2f;
+
     [HideInInspector]
     public string mapCodeOverride = "";
 
@@ -301,6 +305,7 @@ public class NavMeshExportManager : MonoBehaviour
         int waypointId = 0;
         int sampledPoints = 0;
         int skippedTooClose = 0;
+        int skippedEdge = 0;
         int navMeshMisses = 0;
 
         // Calculate sample distance for NavMesh queries
@@ -346,6 +351,17 @@ public class NavMeshExportManager : MonoBehaviour
                     if (NavMesh.SamplePosition(samplePoint, out hit, sampleRadius, NavMesh.AllAreas))
                     {
                         foundNavMesh = true;
+
+                        // Skip waypoints too close to NavMesh edges (walls/boundaries)
+                        NavMeshHit edgeHit;
+                        if (NavMesh.FindClosestEdge(hit.position, out edgeHit, NavMesh.AllAreas))
+                        {
+                            if (edgeHit.distance < edgeMargin)
+                            {
+                                skippedEdge++;
+                                break;
+                            }
+                        }
 
                         // Use spatial hash for O(1) "too close" check
                         var cellKey = GetPositionCellKey(hit.position, minSeparation);
@@ -400,6 +416,7 @@ public class NavMeshExportManager : MonoBehaviour
         Debug.Log($"Waypoint generation: {sampledPoints} points sampled, " +
                   $"{generatedWaypoints.Count} waypoints created, " +
                   $"{skippedTooClose} skipped (too close), " +
+                  $"{skippedEdge} skipped (too close to edge), " +
                   $"{navMeshMisses} no NavMesh found");
 
         // Diagnostic: if most points miss NavMesh, warn the user
@@ -469,6 +486,10 @@ public class NavMeshExportManager : MonoBehaviour
                             if (pathLength <= distance * 1.5f)
                             {
                                 waypoint.connectedWaypoints.Add(other.id);
+                                if (!other.connectedWaypoints.Contains(waypoint.id))
+                                {
+                                    other.connectedWaypoints.Add(waypoint.id);
+                                }
                                 connectionsCreated++;
                             }
                         }
@@ -533,7 +554,9 @@ public class NavMeshExportManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Pre-computes paths from every waypoint to every POI using A*
+    /// Pre-computes paths from every waypoint to every POI using Dijkstra.
+    /// Runs one Dijkstra per POI (from POI outward to all waypoints) instead of
+    /// one A* per (waypoint, POI) pair — dramatically faster for large graphs.
     /// </summary>
     public List<NavigationPath> ComputeAllPaths()
     {
@@ -557,49 +580,63 @@ public class NavMeshExportManager : MonoBehaviour
         }
 
         var allPaths = new List<NavigationPath>();
-        int totalOperations = poiDestinations.Count * generatedWaypoints.Count;
-        int completed = 0;
         int failedPaths = 0;
 
         foreach (var poi in poiDestinations)
         {
+            int poiWaypointId = poi.nearestWaypointId;
+
+            if (!waypointLookup.ContainsKey(poiWaypointId))
+            {
+                Debug.LogWarning($"POI '{poi.name}' nearest waypoint {poiWaypointId} not found in lookup.");
+                failedPaths += generatedWaypoints.Count;
+                continue;
+            }
+
+            // Run Dijkstra once from this POI's nearest waypoint to all reachable waypoints
+            var (dist, prev) = DijkstraFromSource(poiWaypointId);
+
             int pathsToThisPoi = 0;
             int failedToThisPoi = 0;
 
-            // Compute shortest path from every waypoint to this POI's nearest waypoint
             foreach (var startWaypoint in generatedWaypoints)
             {
-                var path = FindShortestPath(startWaypoint.id, poi.nearestWaypointId);
-
-                if (path != null && path.Count > 0)
+                if (startWaypoint.id == poiWaypointId)
                 {
+                    // Waypoint is the POI itself
                     allPaths.Add(new NavigationPath
                     {
                         fromWaypointId = startWaypoint.id,
                         toPoiId = poi.id,
-                        waypointPath = path,
-                        totalDistance = CalculatePathDistance(path)
+                        waypointPath = new List<int> { startWaypoint.id },
+                        totalDistance = 0f
                     });
                     pathsToThisPoi++;
-                }
-                else
-                {
-                    failedPaths++;
-                    failedToThisPoi++;
+                    continue;
                 }
 
-                // Progress feedback every 500 operations
-                completed++;
-                if (completed % 500 == 0)
+                if (!prev.ContainsKey(startWaypoint.id))
                 {
-                    float progress = (completed * 100f / totalOperations);
-                    Debug.Log($"Computing paths: {completed}/{totalOperations} ({progress:F1}%)");
+                    // Unreachable from this POI
+                    failedPaths++;
+                    failedToThisPoi++;
+                    continue;
                 }
+
+                // Reconstruct path from startWaypoint to POI waypoint
+                var path = ReconstructPath(prev, startWaypoint.id, poiWaypointId);
+                allPaths.Add(new NavigationPath
+                {
+                    fromWaypointId = startWaypoint.id,
+                    toPoiId = poi.id,
+                    waypointPath = path,
+                    totalDistance = dist[startWaypoint.id]
+                });
+                pathsToThisPoi++;
             }
 
             Debug.Log($"Paths to '{poi.name}': {pathsToThisPoi} computed, {failedToThisPoi} failed");
 
-            // Warn if many paths failed to this POI
             if (failedToThisPoi > generatedWaypoints.Count * 0.1f)
             {
                 Debug.LogWarning($"POI '{poi.name}' has {failedToThisPoi} unreachable waypoints. " +
@@ -619,99 +656,75 @@ public class NavMeshExportManager : MonoBehaviour
     }
 
     /// <summary>
-    /// A* pathfinding between waypoints.
-    /// Uses dictionary lookup for O(1) waypoint access.
+    /// Runs Dijkstra from a single source waypoint to all reachable waypoints.
+    /// Returns (distances, predecessors) dictionaries.
     /// </summary>
-    private List<int> FindShortestPath(int startId, int endId)
+    private (Dictionary<int, float> dist, Dictionary<int, int> prev) DijkstraFromSource(int sourceId)
     {
-        // Same waypoint - return single-element path
-        if (startId == endId)
-        {
-            return new List<int> { endId };
-        }
+        var dist = new Dictionary<int, float>();
+        var prev = new Dictionary<int, int>();
+        var visited = new HashSet<int>();
 
-        // Validate waypoints exist using O(1) lookup
-        if (!waypointLookup.TryGetValue(startId, out Waypoint startWp) ||
-            !waypointLookup.TryGetValue(endId, out Waypoint endWp))
-        {
-            return null;
-        }
-
-        // A* data structures
-        var openSet = new SortedSet<(float fScore, int id)>(
+        var openSet = new SortedSet<(float distance, int id)>(
             Comparer<(float, int)>.Create((a, b) =>
             {
                 int cmp = a.Item1.CompareTo(b.Item1);
                 return cmp != 0 ? cmp : a.Item2.CompareTo(b.Item2);
             }));
 
-        var cameFrom = new Dictionary<int, int>();
-        var gScore = new Dictionary<int, float>();
-        var inOpenSet = new HashSet<int>();
-
-        // Initialize with start node
-        gScore[startId] = 0;
-        float hStart = Vector3.Distance(startWp.position, endWp.position);
-        openSet.Add((hStart, startId));
-        inOpenSet.Add(startId);
+        dist[sourceId] = 0f;
+        openSet.Add((0f, sourceId));
 
         while (openSet.Count > 0)
         {
-            // Get node with lowest fScore
             var current = openSet.Min;
             openSet.Remove(current);
             int currentId = current.id;
-            inOpenSet.Remove(currentId);
 
-            // Reached destination - reconstruct path
-            if (currentId == endId)
-            {
-                var path = new List<int>();
-                int node = endId;
-                while (cameFrom.ContainsKey(node))
-                {
-                    path.Add(node);
-                    node = cameFrom[node];
-                }
-                path.Add(startId);
-                path.Reverse();
-                return path;
-            }
-
-            // Get current waypoint using O(1) lookup
-            if (!waypointLookup.TryGetValue(currentId, out Waypoint currentWp))
-            {
+            if (!visited.Add(currentId))
                 continue;
-            }
 
-            // Explore neighbors
+            if (!waypointLookup.TryGetValue(currentId, out Waypoint currentWp))
+                continue;
+
             foreach (int neighborId in currentWp.connectedWaypoints)
             {
-                // Get neighbor using O(1) lookup
-                if (!waypointLookup.TryGetValue(neighborId, out Waypoint neighborWp))
-                {
+                if (visited.Contains(neighborId))
                     continue;
-                }
 
-                float tentativeG = gScore[currentId] + Vector3.Distance(currentWp.position, neighborWp.position);
+                if (!waypointLookup.TryGetValue(neighborId, out Waypoint neighborWp))
+                    continue;
 
-                if (!gScore.ContainsKey(neighborId) || tentativeG < gScore[neighborId])
+                float newDist = dist[currentId] + Vector3.Distance(currentWp.position, neighborWp.position);
+
+                if (!dist.ContainsKey(neighborId) || newDist < dist[neighborId])
                 {
-                    cameFrom[neighborId] = currentId;
-                    gScore[neighborId] = tentativeG;
-                    float fScoreValue = tentativeG + Vector3.Distance(neighborWp.position, endWp.position);
-
-                    if (!inOpenSet.Contains(neighborId))
-                    {
-                        openSet.Add((fScoreValue, neighborId));
-                        inOpenSet.Add(neighborId);
-                    }
+                    dist[neighborId] = newDist;
+                    prev[neighborId] = currentId;
+                    openSet.Add((newDist, neighborId));
                 }
             }
         }
 
-        // No path found
-        return null;
+        return (dist, prev);
+    }
+
+    /// <summary>
+    /// Reconstructs path from source to target using the predecessor map.
+    /// </summary>
+    private List<int> ReconstructPath(Dictionary<int, int> prev, int sourceId, int targetId)
+    {
+        var path = new List<int>();
+        int current = sourceId;
+
+        while (current != targetId)
+        {
+            path.Add(current);
+            current = prev[current];
+        }
+        path.Add(targetId);
+
+        return path;
     }
 
     /// <summary>

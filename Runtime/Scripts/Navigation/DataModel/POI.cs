@@ -49,4 +49,4 @@ public class POI : ListItemData
 }
 
 // various POI type, could be used to render POI specific icon
-public enum POIType { Room, VendingMachine, Exit, Staircase, Toilet, FoodArea, Information, BookShelf, Safety, Elevator, Printer, Kitchen }
+public enum POIType { Room, VendingMachine, Exit, Staircase, Toilet, FoodArea, Information, BookShelf, Safety, Elevator, Printer, Kitchen, Outdoor, Parking, Other}
