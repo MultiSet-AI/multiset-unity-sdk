@@ -1,5 +1,9 @@
 # Changelog
-SDK 1.11.4
+SDK 1.11.5
+
+## [1.11.5] - 2026-21-04
+### Added
+- Multiplayer sample scene added
 
 ## [1.11.4] - 2026-14-04
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "com.multiset.sdk",
-  "version": "1.11.4",
+  "version": "1.11.5",
   "displayName": "MultiSet-SDK",
   "description": "The MultiSet developer documentation is your essential resource for creating and integrating MultiSet features into your application.",
   "unity": "6000.3",
@@ -16,7 +16,9 @@
     "com.unity.xr.arcore": "6.3.3",
     "com.unity.xr.arfoundation": "6.3.3",
     "com.unity.xr.arkit": "6.3.3",
-    "com.unity.ai.navigation": "2.0.11"
+    "com.unity.ai.navigation": "2.0.11",
+    "com.unity.netcode.gameobjects": "2.9.2",
+    "com.unity.multiplayer.center": "1.0.1"
   },
   "samples": [
     {
