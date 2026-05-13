@@ -3298,7 +3298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5313641730185013345, guid: dc1790d6755ec4b65bcfe19d1e599012, type: 3}
       propertyPath: offlineBundleDownloadMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5313641730185013345, guid: dc1790d6755ec4b65bcfe19d1e599012, type: 3}
       propertyPath: ReadyForLocalization.m_PersistentCalls.m_Calls.Array.size

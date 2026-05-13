@@ -33,10 +33,10 @@ After installation, you should see **"MultiSet-SDK"** listed in the Package Mana
 ## 📦 Dependencies
 
 The SDK automatically installs these required packages:
-- **Unity Cloud - Draco** (5.4.0)
-- **Unity Cloud - glTFast** (6.14.1) 
-- **AR Foundation** (6.0.6)
-- **AI Navigation** (2.0.9)
+- **Unity Cloud - Draco** (5.4.2)
+- **Unity Cloud - glTFast** (6.15.1) 
+- **AR Foundation** (6.3.3)
+- **AI Navigation** (2.0.11)
 
 ## 🎯 Sample Scenes
 
@@ -218,6 +218,6 @@ https://github.com/MultiSet-AI/multiset-unity-sdk.git#latest
 
 ---
 
-**Version**: 1.11.4
+**Version**: 1.14.0
 **Unity Compatibility**: 6000.3.11f1+  
-**Last Updated**: April 2026
+**Last Updated**: May 2026

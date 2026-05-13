@@ -1,5 +1,11 @@
 # Changelog
-SDK 1.11.5
+SDK 1.14.0
+
+
+## [1.14.0] - 2026-13-05
+### Added
+- Map Versioning added
+- Interactive cusor for getting coordinates on map
 
 ## [1.11.5] - 2026-21-04
 ### Added

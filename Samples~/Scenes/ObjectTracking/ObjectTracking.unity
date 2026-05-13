@@ -2496,16 +2496,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2874848083631852082}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
+      propertyPath: bgTrackingDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: objectCodes.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: 'objectCodes.Array.data[0]'
-      value: OBJ_AW08ZCRB4UDP
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: 'objectCodes.Array.data[1]'
-      value: OBJ_AW08ZCRB4UDP
+      value: OBJ_02WP3K9JYG89
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
+      propertyPath: 'objectCodes.Array.data[2]'
+      value: OBJ_S4UE8BYV1OK3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
+      propertyPath: 'objectCodes.Array.data[3]'
+      value: OBJ_KFHAVY78CITM
       objectReference: {fileID: 0}
     - target: {fileID: 4601836157624579926, guid: 25aae93cc9c734b54a985d96438e0531, type: 3}
       propertyPath: ObjectTrackingInit.m_PersistentCalls.m_Calls.Array.data[0].m_Target

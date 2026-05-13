@@ -56,7 +56,7 @@ public class ShowPath : MonoBehaviour
     float _invalidPathTimer = 0f;
 
     [Tooltip("Seconds of continuous invalid path before stopping navigation")]
-    public float invalidPathTimeout = 15f;
+    public float invalidPathTimeout = 10f;
 
     void Awake()
     {

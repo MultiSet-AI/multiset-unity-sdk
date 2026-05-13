@@ -1,6 +1,6 @@
 # MultiSet SDK License
 
-**Copyright (c) 2025 MultiSet AI**
+**Copyright (c) 2026 MultiSet AI**
 
 All rights reserved.
 

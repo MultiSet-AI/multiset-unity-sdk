@@ -358,7 +358,12 @@ namespace MultiSet
 
             foreach (MapSetData mapSetData in mapSetDataList)
             {
-                string _mapCode = mapSetData.map.mapCode;
+                if (!TryGetEffectiveMap(mapSetData, out string mapId, out string _mapCode, out MapMesh mapMesh))
+                {
+                    Debug.LogWarning("MapSetData entry has no valid baseMap or map; skipping.");
+                    continue;
+                }
+
                 string directoryPath = Path.Combine(Application.dataPath, "MultiSet/MapData/" + mapSet.mapSetCode);
                 string finalFilePath = Path.Combine("Assets/MultiSet/MapData/" + mapSet.mapSetCode, _mapCode + ".glb");
 
@@ -370,14 +375,46 @@ namespace MultiSet
                 if (File.Exists(finalFilePath))
                 {
                     isDownloading = false;
-                    ImportAndAttachGLBMapset(finalFilePath, mapSetData.map._id);
+                    ImportAndAttachGLBMapset(finalFilePath, mapId);
                 }
                 else
                 {
-                    string _meshLink = mapSetData.map.mapMesh.texturedMesh.meshLink;
-                    MultiSetApiManager.GetFileUrl(_meshLink, FileUrlCallbackMapset);
+                    string _meshLink = mapMesh?.texturedMesh?.meshLink;
+                    if (!string.IsNullOrWhiteSpace(_meshLink))
+                    {
+                        MultiSetApiManager.GetFileUrl(_meshLink, FileUrlCallbackMapset);
+                    }
+                    else
+                    {
+                        Debug.LogError($"No mesh link available for map '{_mapCode}'.");
+                    }
                 }
             }
+        }
+
+    
+        private static bool TryGetEffectiveMap(MapSetData data, out string id, out string mapCode, out MapMesh mapMesh)
+        {
+            if (data != null && data.baseMap != null && !string.IsNullOrEmpty(data.baseMap._id))
+            {
+                id = data.baseMap._id;
+                mapCode = data.baseMap.mapCode;
+                mapMesh = data.baseMap.mapMesh;
+                return true;
+            }
+
+            if (data != null && data.map != null && !string.IsNullOrEmpty(data.map._id))
+            {
+                id = data.map._id;
+                mapCode = data.map.mapCode;
+                mapMesh = data.map.mapMesh;
+                return true;
+            }
+
+            id = null;
+            mapCode = null;
+            mapMesh = null;
+            return false;
         }
 
         private void FileUrlCallbackMapset(bool success, string data, long statusCode)
@@ -447,21 +484,18 @@ namespace MultiSet
 
         private string GetMapCodeFromMapSetData(string mapId)
         {
-            string mapCode = null;
+            if (mapSet == null || mapSet.mapSetData == null)
+                return null;
 
-            if (mapSet != null && mapSet.mapSetData != null)
+            foreach (MapSetData mapSetData in mapSet.mapSetData)
             {
-                foreach (MapSetData mapSetData in mapSet.mapSetData)
+                if (TryGetEffectiveMap(mapSetData, out string id, out string mapCode, out _) && id == mapId)
                 {
-                    if (mapSetData.map._id == mapId)
-                    {
-                        mapCode = mapSetData.map.mapCode;
-                        break;
-                    }
+                    return mapCode;
                 }
             }
 
-            return mapCode;
+            return null;
         }
 
         private void ImportAndAttachGLBMapset(string finalFilePath = null, string mapId = null)
