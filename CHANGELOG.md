@@ -5,7 +5,7 @@ SDK 1.14.0
 ## [1.14.0] - 2026-13-05
 ### Added
 - Map Versioning added
-- Interactive cusor for getting coordinates on map
+- Added MapPointInspector to get MapSpace coordinats
 
 ## [1.11.5] - 2026-21-04
 ### Added
