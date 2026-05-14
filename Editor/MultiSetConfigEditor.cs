@@ -17,10 +17,89 @@ namespace MultiSet
         private string m_verifyMessage = string.Empty;
         private MessageType m_messageType = MessageType.Info;
 
+        private bool m_isEditingBaseUrl = false;
+        private string m_editedBaseUrl = string.Empty;
+
         public override void OnInspectorGUI()
         {
-            // Draw default fields (clientId, clientSecret)
-            DrawDefaultInspector();
+            serializedObject.Update();
+
+            SerializedProperty baseUrlProp = serializedObject.FindProperty("baseUrl");
+            SerializedProperty clientIdProp = serializedObject.FindProperty("clientId");
+            SerializedProperty clientSecretProp = serializedObject.FindProperty("clientSecret");
+
+            // === MultiSet API Configuration ===
+            EditorGUILayout.LabelField("MultiSet API Configuration", EditorStyles.boldLabel);
+
+            GUIContent baseUrlLabel = new GUIContent(
+                "Base URL",
+                "Base URL for MultiSet API calls. Leave as the default unless instructed otherwise.");
+
+            if (!m_isEditingBaseUrl)
+            {
+                using (new EditorGUI.DisabledScope(true))
+                {
+                    EditorGUILayout.TextField(baseUrlLabel, baseUrlProp.stringValue);
+                }
+
+                if (GUILayout.Button("Update Base URL", GUILayout.Height(22)))
+                {
+                    m_editedBaseUrl = baseUrlProp.stringValue;
+                    m_isEditingBaseUrl = true;
+                    GUI.FocusControl(null);
+                }
+            }
+            else
+            {
+                m_editedBaseUrl = EditorGUILayout.TextField(baseUrlLabel, m_editedBaseUrl);
+
+                EditorGUILayout.BeginHorizontal();
+
+                if (GUILayout.Button("Continue", GUILayout.Height(22)))
+                {
+                    string newValue = (m_editedBaseUrl ?? string.Empty).Trim();
+
+                    if (string.IsNullOrEmpty(newValue))
+                    {
+                        EditorUtility.DisplayDialog(
+                            "Invalid Base URL",
+                            "Base URL cannot be empty.",
+                            "OK");
+                    }
+                    else
+                    {
+                        bool confirm = EditorUtility.DisplayDialog(
+                            "Update Base URL?",
+                            "Please make sure the base URL is correct. If the URL is invalid, the MultiSet SDK will not work and all functionality may break.\n\nNew Base URL:\n" + newValue,
+                            "Confirm",
+                            "Cancel");
+
+                        if (confirm)
+                        {
+                            baseUrlProp.stringValue = newValue;
+                            m_editedBaseUrl = newValue;
+                            m_isEditingBaseUrl = false;
+                            GUI.FocusControl(null);
+                        }
+                    }
+                }
+
+                if (GUILayout.Button("Cancel", GUILayout.Height(22)))
+                {
+                    m_editedBaseUrl = baseUrlProp.stringValue;
+                    m_isEditingBaseUrl = false;
+                    GUI.FocusControl(null);
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+
+            // === MultiSet SDK Credentials ===
+            // [Space] and [Header] attributes on clientId in MultiSetConfig.cs draw the section header automatically.
+            EditorGUILayout.PropertyField(clientIdProp);
+            EditorGUILayout.PropertyField(clientSecretProp);
+
+            serializedObject.ApplyModifiedProperties();
 
             GUILayout.Space(10);
 
@@ -92,5 +171,3 @@ namespace MultiSet
     }
 }
 #endif
-
-
