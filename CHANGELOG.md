@@ -1,11 +1,15 @@
 # Changelog
-SDK 1.14.0
+SDK 1.14.1
+
+## [1.14.1] - 2026-22-05
+### Added
+- Support added for Portrait Mapping
 
 
 ## [1.14.0] - 2026-13-05
 ### Added
 - Map Versioning added
-- Added MapPointInspector to get MapSpace coordinats
+- Added MapPointInspector to get MapSpace coordinates
 
 ## [1.11.5] - 2026-21-04
 ### Added
