@@ -18,6 +18,8 @@ using UnityEditor;
 
 namespace MultiSet
 {
+    public enum MapMeshType { Textured, Raw }
+
     public class MapMeshDownloader : MonoBehaviour
     {
         // private MapLocalizationManager mapLocalizationManager;
@@ -25,6 +27,9 @@ namespace MultiSet
         [Space(10)]
         [Tooltip("Drag and drop the MapSpace GameObject here.")]
         public GameObject m_mapSpace;
+
+        [Tooltip("Choose which mesh to download: Textured (with color) or Raw (geometry only).")]
+        public MapMeshType meshType = MapMeshType.Textured;
 
         private VpsMap m_vpsMap;
         private MapSet mapSet;
@@ -182,12 +187,26 @@ namespace MultiSet
             }
             else
             {
-                string _meshLink = m_vpsMap.mapMesh.texturedMesh.meshLink;
+                string _meshLink = GetMeshLink(m_vpsMap.mapMesh);
                 if (!string.IsNullOrWhiteSpace(_meshLink))
                 {
                     MultiSetApiManager.GetFileUrl(_meshLink, FileUrlCallbackEditor);
                 }
+                else
+                {
+                    isDownloading = false;
+                    Debug.LogError($"No {meshType} mesh link available for map '{mapOrMapsetCode}'.");
+                }
             }
+        }
+
+        // Resolves the mesh download link for the currently selected mesh type.
+        private string GetMeshLink(MapMesh mapMesh)
+        {
+            if (mapMesh == null) return null;
+            return meshType == MapMeshType.Raw
+                ? mapMesh.rawMesh?.meshLink
+                : mapMesh.texturedMesh?.meshLink;
         }
 
         private void FileUrlCallbackEditor(bool success, string data, long statusCode)
@@ -379,14 +398,14 @@ namespace MultiSet
                 }
                 else
                 {
-                    string _meshLink = mapMesh?.texturedMesh?.meshLink;
+                    string _meshLink = GetMeshLink(mapMesh);
                     if (!string.IsNullOrWhiteSpace(_meshLink))
                     {
                         MultiSetApiManager.GetFileUrl(_meshLink, FileUrlCallbackMapset);
                     }
                     else
                     {
-                        Debug.LogError($"No mesh link available for map '{_mapCode}'.");
+                        Debug.LogError($"No {meshType} mesh link available for map '{_mapCode}'.");
                     }
                 }
             }
