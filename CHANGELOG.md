@@ -1,5 +1,10 @@
 # Changelog
-SDK 1.14.1
+SDK 1.14.2
+
+## [1.14.2] - 2026-04-06
+### Added
+- Support added for adding hintFloorHeight in query
+
 
 ## [1.14.1] - 2026-22-05
 ### Added
