@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 823483932, guid: 5e2b4f19fefec46a08626f272dff56e8, type: 3}
   m_Name: MultiSetConfig
   m_EditorClassIdentifier: 
+  baseUrl: https://api.multiset.ai
   clientId: 
   clientSecret: 

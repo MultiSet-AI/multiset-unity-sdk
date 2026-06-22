@@ -9,37 +9,6 @@ using UnityEditor;
 
 namespace MultiSet
 {
-    /// <summary>
-    /// Inspects points on a localized map mesh: raycasts from the mouse (or screen-center / camera
-    /// forward in AR) onto the mesh and reports the surface hit pose in MapSpace local coordinates.
-    /// Useful for reading floor height, authoring hint poses, picking spawn points, or measuring
-    /// vertical offsets on the map.
-    ///
-    /// Setup:
-    ///   Assign <see cref="mapSpace"/> (the root transform whose local space matches the
-    ///   map coordinate frame) and <see cref="mapMesh"/> (the mesh root to raycast against).
-    ///   MeshColliders are added automatically to any descendant that is missing one.
-    ///
-    /// Cursor visualizer (auto-created at runtime):
-    ///   • A flat cyan disc aligned with the surface normal.
-    ///   • A green LineRenderer arrow pointing along the normal.
-    ///
-    /// Readout label (auto-created at runtime):
-    ///   A Screen Space Overlay canvas so the readout is never occluded by 3-D geometry.
-    ///   The label projects the world hit position to screen coordinates each frame and shows
-    ///   the floor height plus the full MapSpace position.
-    ///
-    /// Play-mode shortcut:
-    ///   Press <see cref="copyPoseKey"/> to copy the current pose (X, Y, Z and floor height)
-    ///   to the system clipboard.
-    ///
-    /// Public state available to other scripts:
-    ///   <see cref="LocalHitPosition"/>, <see cref="LocalHitNormal"/>, <see cref="IsHitting"/>
-    ///
-    /// Gizmos (Scene view, Edit and Play mode):
-    ///   Cyan sphere = hit position · Green ray = surface normal
-    /// </summary>
-
     public class MapPointInspector : MonoBehaviour
     {
         [Header("Scene References")]

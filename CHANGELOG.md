@@ -1,5 +1,17 @@
 # Changelog
-SDK 1.14.2
+SDK 1.15.0
+
+
+## [1.15.0] - 2026-22-06
+### Added
+- Refactored the Project Structure
+- Added Navigation scene scripts as part of Sample scene now
+- Bug fixes
+
+## [1.14.3] - 2026-10-06
+### Added
+- Bug fixes
+
 
 ## [1.14.2] - 2026-04-06
 ### Added

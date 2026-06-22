@@ -1,22 +1,14 @@
 #import "MultisetMultipeer.h"
-
-// UnitySendMessage is provided by the Unity runtime
 extern void UnitySendMessage(const char *obj, const char *method, const char *msg);
-
 static NSString *const kServiceType = @"multiset-sdk";
 static NSString *const kGameObjectName = @"MultisetMultipeerReceiver";
-
 @interface MultisetMultipeer () <MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, MCNearbyServiceBrowserDelegate>
-
 @property (nonatomic, strong) MCPeerID *myPeerID;
 @property (nonatomic, strong) MCSession *session;
 @property (nonatomic, strong) MCNearbyServiceAdvertiser *advertiser;
 @property (nonatomic, strong) MCNearbyServiceBrowser *browser;
-
 @end
-
 @implementation MultisetMultipeer
-
 + (instancetype)shared {
     static MultisetMultipeer *instance = nil;
     static dispatch_once_t onceToken;
@@ -25,7 +17,6 @@ static NSString *const kGameObjectName = @"MultisetMultipeerReceiver";
     });
     return instance;
 }
-
 - (void)setupWithName:(NSString *)displayName {
     self.myPeerID = [[MCPeerID alloc] initWithDisplayName:displayName];
     self.session = [[MCSession alloc] initWithPeer:self.myPeerID
@@ -33,7 +24,6 @@ static NSString *const kGameObjectName = @"MultisetMultipeerReceiver";
                                encryptionPreference:MCEncryptionNone];
     self.session.delegate = self;
 }
-
 - (void)startHostingWithName:(NSString *)displayName {
     [self setupWithName:displayName];
     self.advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:self.myPeerID
@@ -43,7 +33,6 @@ static NSString *const kGameObjectName = @"MultisetMultipeerReceiver";
     [self.advertiser startAdvertisingPeer];
     NSLog(@"MultisetMPC >> Started hosting as %@", displayName);
 }
-
 - (void)startBrowsingWithName:(NSString *)displayName {
     [self setupWithName:displayName];
     self.browser = [[MCNearbyServiceBrowser alloc] initWithPeer:self.myPeerID
@@ -52,7 +41,6 @@ static NSString *const kGameObjectName = @"MultisetMultipeerReceiver";
     [self.browser startBrowsingForPeers];
     NSLog(@"MultisetMPC >> Started browsing as %@", displayName);
 }
-
 - (void)sendData:(NSData *)data reliable:(BOOL)reliable {
     if (self.session.connectedPeers.count == 0) return;
 
@@ -66,14 +54,12 @@ static NSString *const kGameObjectName = @"MultisetMultipeerReceiver";
         NSLog(@"MultisetMPC >> Send error: %@", error.localizedDescription);
     }
 }
-
 - (void)disconnect {
     [self.advertiser stopAdvertisingPeer];
     [self.browser stopBrowsingForPeers];
     [self.session disconnect];
     NSLog(@"MultisetMPC >> Disconnected");
 }
-
 - (BOOL)isConnected {
     return self.session.connectedPeers.count > 0;
 }

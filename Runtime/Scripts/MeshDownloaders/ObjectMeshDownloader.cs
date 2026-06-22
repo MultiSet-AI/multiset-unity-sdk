@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
 
 #if UNITY_EDITOR
@@ -45,10 +44,14 @@ namespace MultiSet
             isDownloading = true;
 
             MultisetSdkManager multisetSdkManager = FindFirstObjectByType<MultisetSdkManager>();
-            ObjectTrackingManager objectTrackingManager = FindFirstObjectByType<ObjectTrackingManager>();
-            if (objectTrackingManager != null)
+          
+            IObjectTrackingTarget objectTrackingTarget = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+                .OfType<IObjectTrackingTarget>()
+                .FirstOrDefault();
+
+            if (objectTrackingTarget != null)
             {
-                objectCodes = objectTrackingManager.objectCodes
+                objectCodes = objectTrackingTarget.ObjectCodes
                     .Where(code => !string.IsNullOrWhiteSpace(code))
                     .ToList();
             }
@@ -371,6 +374,6 @@ namespace MultiSet
         }
 
         #endregion
-       
+
     }
 }

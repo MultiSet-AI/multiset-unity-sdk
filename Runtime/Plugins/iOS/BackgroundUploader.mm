@@ -1,6 +1,4 @@
-// BackgroundUploader.mm
 #import "BackgroundUploader.h"
-
 @interface BackgroundUploader () <NSURLSessionTaskDelegate, NSURLSessionDelegate>
 @property (nonatomic, strong) NSURLSession *backgroundSession;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSURLSessionUploadTask *> *activeTasks;
@@ -86,7 +84,6 @@
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
     
-    // Find the upload ID for this task
     __block NSNumber *uploadId = nil;
     [self.activeTasks enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSURLSessionUploadTask * _Nonnull obj, BOOL * _Nonnull stop) {
         if (obj == task) {
@@ -105,8 +102,6 @@
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    
-    // Find the upload ID for this task
     __block NSNumber *uploadId = nil;
     [self.activeTasks enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, NSURLSessionUploadTask * _Nonnull obj, BOOL * _Nonnull stop) {
         if (obj == task) {
@@ -120,22 +115,17 @@
     }
     
     BOOL success = (error == nil && ((NSHTTPURLResponse *)task.response).statusCode >= 200 && ((NSHTTPURLResponse *)task.response).statusCode < 300);
-    
-    // Call the Unity callback
     if (self.completionCallback != NULL) {
         NSString *errorMessage = error ? [error localizedDescription] : @"";
         const char *errorCStr = [errorMessage UTF8String];
         self.completionCallback([uploadId intValue], success, errorCStr);
     }
-    
-    // Clean up
     [self.activeTasks removeObjectForKey:uploadId];
     [self.taskProgress removeObjectForKey:uploadId];
 }
 
 @end
 
-// Unity Plugin Interface
 extern "C" {
     int StartBackgroundUpload(const char* filePath, const char* uploadUrl, const char* contentType) {
         NSString *filePathStr = [NSString stringWithUTF8String:filePath];

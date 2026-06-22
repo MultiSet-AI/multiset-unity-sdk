@@ -25,6 +25,12 @@ public class AgentPosition : MonoBehaviour
 
     void Update()
     {
+        // skip warping while there is no NavMesh near the camera, e.g. before localization
+        if (!NavMesh.SamplePosition(ARcamera.transform.position, out _, 4f, NavMesh.AllAreas))
+        {
+            return;
+        }
+
         // teleport agent to camera x & z, but take y from agent object
         agent.Warp(new Vector3(ARcamera.transform.position.x, agent.gameObject.transform.position.y, ARcamera.transform.position.z));
 

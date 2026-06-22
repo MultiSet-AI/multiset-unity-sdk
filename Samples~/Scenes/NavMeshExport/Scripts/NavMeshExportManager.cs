@@ -11,12 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-/// <summary>
-/// Generates a grid of navigation waypoints on the NavMesh and pre-computes
-/// paths from every waypoint to every POI. This data is exported for use
-/// on Meta Ray-Ban glasses where runtime NavMesh is not available.
-/// Combines functionality from DummyMapData - exports bounds, POIs, waypoints, and paths.
-/// </summary>
 public class NavMeshExportManager : MonoBehaviour
 {
     [Header("References")]

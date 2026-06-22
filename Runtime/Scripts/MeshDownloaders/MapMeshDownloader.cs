@@ -54,24 +54,14 @@ namespace MultiSet
 
             MultisetSdkManager multisetSdkManager = FindFirstObjectByType<MultisetSdkManager>();
 
-            MapLocalizationManager mapLocalizationManager = FindFirstObjectByType<MapLocalizationManager>();
-            SingleFrameLocalizationManager singleFrameLocalizationManager = FindFirstObjectByType<SingleFrameLocalizationManager>();
-            OnDeviceLocalizationManager onDeviceLocalizationManager = FindFirstObjectByType<OnDeviceLocalizationManager>();
+            ILocalizationTarget localizationTarget = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+                .OfType<ILocalizationTarget>()
+                .FirstOrDefault();
 
-            if (mapLocalizationManager != null)
+            if (localizationTarget != null)
             {
-                mapOrMapsetCode = mapLocalizationManager.mapOrMapsetCode;
-                itsMap = mapLocalizationManager.localizationType == LocalizationType.Map;
-            }
-            else if (singleFrameLocalizationManager != null)
-            {
-                mapOrMapsetCode = singleFrameLocalizationManager.mapOrMapsetCode;
-                itsMap = singleFrameLocalizationManager.localizationType == LocalizationType.Map;
-            }
-            else if (onDeviceLocalizationManager != null)
-            {
-                mapOrMapsetCode = onDeviceLocalizationManager.mapOrMapsetCode;
-                itsMap = onDeviceLocalizationManager.localizationType == LocalizationType.Map;
+                mapOrMapsetCode = localizationTarget.MapOrMapsetCode;
+                itsMap = localizationTarget.LocalizationType == LocalizationType.Map;
             }
 
             if (string.IsNullOrWhiteSpace(mapOrMapsetCode))

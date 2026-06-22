@@ -41,12 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3376364840450160081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 512b791bb1c6c4d33973c53d0dce4c8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d936ecf619cd4ba5b6ae8557b509f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiSet.FloorHeightManager
   mapSpace: {fileID: 0}
   mapMesh: {fileID: 0}
   cursorScale: 0.1
-  labelOffsetY: -200
+  labelOffsetY: -240
   labelFontSize: 80
   copyPoseKey: 17
