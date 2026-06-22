@@ -218,6 +218,6 @@ https://github.com/MultiSet-AI/multiset-unity-sdk.git#latest
 
 ---
 
-**Version**: 1.14.0
+**Version**: 1.15.0
 **Unity Compatibility**: 6000.3.11f1+  
 **Last Updated**: May 2026

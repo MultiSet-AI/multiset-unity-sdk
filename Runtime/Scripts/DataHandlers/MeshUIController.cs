@@ -18,8 +18,6 @@ namespace MultiSet
             // otherwise it keeps whatever active state the SDK set (localization-based).
             if (m_meshToggle != null)
                 currentMesh.SetActive(m_meshToggle.isOn);
-
-            Debug.Log($"Mesh ready: {mesh.name}");
         }
 
         public void Start()
