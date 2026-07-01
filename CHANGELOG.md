@@ -1,6 +1,9 @@
 # Changelog
-SDK 1.15.0
+SDK 1.15.1
 
+## [1.15.1] - 2026-01-07
+### Added
+- Fixed GeoPose field in localization response
 
 ## [1.15.0] - 2026-22-06
 ### Added
