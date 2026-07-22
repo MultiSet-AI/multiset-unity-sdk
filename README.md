@@ -68,6 +68,7 @@ Assets/Samples/MultiSet-SDK/[version]/Sample Scenes/
 | **OnDeviceLocalization.unity** | OnDevice Localization capabilities | `OnDeviceLocalization/` |
 | **MapSetAlignment.unity** | Align Mapsets within Unity Editor | `AlignMapSet/` |
 | **SimulationDataCapture.unity** | Simulation Data Capture | `SimulationData/` |
+| **GlobalToLocal.unity** | Coordinates from global to local  | `GlobalToLocal/` |
 
 
 ## ⚙️ Configuration
@@ -218,6 +219,6 @@ https://github.com/MultiSet-AI/multiset-unity-sdk.git#latest
 
 ---
 
-**Version**: 1.15.0
+**Version**: 1.15.2
 **Unity Compatibility**: 6000.3.11f1+  
 **Last Updated**: May 2026

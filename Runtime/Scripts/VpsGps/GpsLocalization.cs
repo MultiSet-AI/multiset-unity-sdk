@@ -160,8 +160,6 @@ namespace MultiSet
             if (success)
             {
                 vpsMap = JsonUtility.FromJson<VpsMap>(data);
-                Debug.Log("Map Location: " + vpsMap.location.coordinates[1] + ", " + vpsMap.location.coordinates[0] + ", " + vpsMap.location.coordinates[2]);
-                Debug.Log("Map Heading: " + vpsMap.heading);
             }
             else
             {
@@ -428,9 +426,9 @@ namespace MultiSet
                 averagedAltitude = altitude; // use map altitude for better stability
 
                 // Use map data from API
-                double mapOriginLat = vpsMap.location.coordinates[1];
-                double mapOriginLon = vpsMap.location.coordinates[0];
-                double mapOriginAlt = vpsMap.location.coordinates[2];
+                double mapOriginLat = vpsMap.coordinates.latitude;
+                double mapOriginLon = vpsMap.coordinates.longitude;
+                double mapOriginAlt = vpsMap.coordinates.altitude;
                 double mapHeadingFromApi = vpsMap.heading;
 
                 // Get GeoTransformer to convert GPS to local position

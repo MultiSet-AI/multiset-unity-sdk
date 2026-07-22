@@ -1,5 +1,9 @@
 # Changelog
-SDK 1.15.1
+SDK 1.15.2
+
+## [1.15.1] - 2026-22-07
+### Added
+- Convert map coordinates from global to local (relative to origin)
 
 ## [1.15.1] - 2026-01-07
 ### Added
