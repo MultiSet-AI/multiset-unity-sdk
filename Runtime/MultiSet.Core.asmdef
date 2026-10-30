@@ -6,7 +6,8 @@
         "Draco",
         "glTFast",
         "Unity.InputSystem",
-        "Unity.XR.ARFoundation"
+        "Unity.XR.ARFoundation",
+        "Unity.XR.CoreUtils"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

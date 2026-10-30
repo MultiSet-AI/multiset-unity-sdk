@@ -148,4 +148,17 @@ extern "C" {
     void SetupCompletionCallback(void (*callback)(int, BOOL, const char *)) {
         [[BackgroundUploader sharedInstance] setupCompletionCallback:callback];
     }
+
+    // Important-usage capacity counts space iOS can purge on demand, unlike NSFileSystemFreeSize.
+    long long MultiSetFreeDiskSpace(const char* path) {
+        NSString *pathStr = path ? [NSString stringWithUTF8String:path] : NSHomeDirectory();
+        NSURL *url = [NSURL fileURLWithPath:pathStr];
+        NSNumber *important = nil;
+        if ([url getResourceValue:&important forKey:NSURLVolumeAvailableCapacityForImportantUsageKey error:nil] && important != nil) {
+            return important.longLongValue;
+        }
+        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfFileSystemForPath:pathStr error:nil];
+        NSNumber *free = attributes[NSFileSystemFreeSize];
+        return free != nil ? free.longLongValue : -1;
+    }
 }

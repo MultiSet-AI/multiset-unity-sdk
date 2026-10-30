@@ -3,3 +3,4 @@ void StartBackgroundUpload(const char* a, const char* b, const char* c) { }
 void GetUploadProgress(int a) { }
 void CancelUpload(int a) { }
 void SetupCompletionCallback(void* a) { }
+long long MultiSetFreeDiskSpace(const char* a) { return -1; }
