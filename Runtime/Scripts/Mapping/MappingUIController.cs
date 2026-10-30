@@ -84,6 +84,8 @@ namespace MultiSet.Samples
             mappingManager.OnMapNameValidated += HandleMapNameValidated;
             mappingManager.OnAuthenticationChanged += HandleAuthenticationChanged;
             mappingManager.OnDraftSaved += HandleDraftSaved;
+            mappingManager.OnFinalMinute += HandleFinalMinute;
+            mappingManager.OnMaxDurationReached += HandleMaxDurationReached;
         }
 
         private void UnsubscribeFromEvents()
@@ -96,6 +98,8 @@ namespace MultiSet.Samples
             mappingManager.OnMapNameValidated -= HandleMapNameValidated;
             mappingManager.OnAuthenticationChanged -= HandleAuthenticationChanged;
             mappingManager.OnDraftSaved -= HandleDraftSaved;
+            mappingManager.OnFinalMinute -= HandleFinalMinute;
+            mappingManager.OnMaxDurationReached -= HandleMaxDurationReached;
         }
         #endregion
 
@@ -229,6 +233,16 @@ namespace MultiSet.Samples
         private void HandleDraftSaved(object sender, DraftMapSelectedEventArgs e)
         {
             draftDetailsPopup?.SetActive(true);
+        }
+
+        private void HandleFinalMinute(object sender, System.EventArgs e)
+        {
+            ToastManager.Instance?.ShowToast("One minute left — the scan stops itself at 10:00");
+        }
+
+        private void HandleMaxDurationReached(object sender, System.EventArgs e)
+        {
+            ToastManager.Instance?.ShowToast("The scan reached 10 minutes and was stopped.");
         }
         #endregion
 
